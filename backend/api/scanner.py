@@ -9,6 +9,7 @@ from scanner.scanner import (
     WebsiteUnavailableError,
     scan_website,
 )
+from seo.engine import SEOAnalysisResult, analyze
 
 
 logger = logging.getLogger(__name__)
@@ -20,9 +21,14 @@ class ScanRequest(BaseModel):
     url: HttpUrl
 
 
+class ScanResponse(BaseModel):
+    scan: ScannerResponse
+    seo: SEOAnalysisResult
+
+
 @router.post(
     "/scan",
-    response_model=ScannerResponse,
+    response_model=ScanResponse,
     status_code=status.HTTP_200_OK,
     responses={
         status.HTTP_400_BAD_REQUEST: {"description": "Invalid URL"},
@@ -31,9 +37,11 @@ class ScanRequest(BaseModel):
         status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Unexpected error"},
     },
 )
-def scan(request: ScanRequest) -> ScannerResponse:
+def scan(request: ScanRequest) -> ScanResponse:
     try:
-        return scan_website(str(request.url))
+        scan_result = scan_website(str(request.url))
+        seo_result = analyze(scan_result)
+        return ScanResponse(scan=scan_result, seo=seo_result)
     except ValueError as exc:
         logger.warning("Invalid scanner request: %s", exc)
         raise HTTPException(
