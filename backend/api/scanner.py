@@ -3,6 +3,8 @@ import logging
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, HttpUrl
 
+from ai.engine import analyze_ai
+from ai.models import AIRecommendationResult
 from scanner.models import ScannerResponse
 from scanner.scanner import (
     ScannerTimeoutError,
@@ -24,6 +26,7 @@ class ScanRequest(BaseModel):
 class ScanResponse(BaseModel):
     scan: ScannerResponse
     seo: SEOAnalysisResult
+    ai: AIRecommendationResult
 
 
 @router.post(
@@ -41,25 +44,35 @@ def scan(request: ScanRequest) -> ScanResponse:
     try:
         scan_result = scan_website(str(request.url))
         seo_result = analyze(scan_result)
-        return ScanResponse(scan=scan_result, seo=seo_result)
+        ai_result = analyze_ai(scan_result, seo_result)
+
+        return ScanResponse(
+            scan=scan_result,
+            seo=seo_result,
+            ai=ai_result,
+        )
+
     except ValueError as exc:
         logger.warning("Invalid scanner request: %s", exc)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Invalid URL",
         ) from exc
+
     except WebsiteUnavailableError as exc:
         logger.warning("Website unavailable during scan: %s", exc)
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Website Unavailable",
         ) from exc
+
     except ScannerTimeoutError as exc:
         logger.warning("Website timeout during scan: %s", exc)
         raise HTTPException(
             status_code=status.HTTP_504_GATEWAY_TIMEOUT,
             detail="Timeout",
         ) from exc
+
     except Exception as exc:
         logger.exception("Unexpected scanner API error")
         raise HTTPException(
