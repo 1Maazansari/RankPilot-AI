@@ -14,7 +14,6 @@ from .robots import detect_robots_txt
 from .sitemap import detect_sitemap_xml
 from .validators import validate_url
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -32,14 +31,17 @@ class WebsiteUnavailableError(ScannerError):
 
 def scan_website(url: str) -> ScannerResponse:
     logger.info("Starting website scan")
+
     validated_url = validate_url(url)
     logger.debug("URL validation succeeded: url=%s", validated_url)
 
     html = _download_html(validated_url)
+
     logger.debug("Parsing HTML with lxml: url=%s", validated_url)
     soup = BeautifulSoup(html, "lxml")
 
     metadata = extract_metadata(soup)
+
     scanner_response = ScannerResponse(
         url=validated_url,
         **metadata,
@@ -51,27 +53,36 @@ def scan_website(url: str) -> ScannerResponse:
         robots_found=detect_robots_txt(validated_url),
         sitemap_found=detect_sitemap_xml(validated_url),
     )
+
     logger.info("Website scan complete: url=%s", validated_url)
+
     return scanner_response
 
 
 def _download_html(url: str) -> str:
     logger.debug("Downloading HTML: url=%s", url)
+
     try:
         response = session.get(url, timeout=SCANNER_TIMEOUT_SECONDS)
         response.raise_for_status()
+
     except requests.Timeout as exc:
         logger.warning("Website scan timed out: url=%s", url)
         raise ScannerTimeoutError("Website took too long to respond.") from exc
+
     except requests.RequestException as exc:
-        logger.warning("Website unavailable: url=%s error=%s", url, exc)
-        raise WebsiteUnavailableError("Unable to access the website.") from exc
+        logger.exception("Request failed for %s", url)
+        raise WebsiteUnavailableError(str(exc)) from exc
 
     response.encoding = response.apparent_encoding
+
     logger.info(
         "HTML download complete: url=%s status_code=%s encoding=%s",
         url,
         response.status_code,
         response.encoding,
     )
+
+    
+
     return response.text
