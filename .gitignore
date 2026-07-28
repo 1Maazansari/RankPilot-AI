@@ -1,20 +1,31 @@
+# ----------------------------
 # Virtual Environments
+# ----------------------------
 venv/
 .venv/
 backend/.venv/
 
-# Python
+# ----------------------------
+# Python Cache & Bytecode
+# ----------------------------
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 *.pyd
+.pytest_cache/
 
-# Environment variables
+# ----------------------------
+# Environment Variables
+# ----------------------------
 .env
 
+# ----------------------------
 # VS Code
+# ----------------------------
 .vscode/
 
-# OS files
+# ----------------------------
+# Operating System Files
+# ----------------------------
 .DS_Store
 Thumbs.db
