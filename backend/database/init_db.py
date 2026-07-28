@@ -1,13 +1,8 @@
-"""
-Initialize database tables.
-"""
-
 from backend.database.base import Base
 from backend.database.session import engine
 
-# Import models here
-# Example:
-# from backend.models.project import Project
+# Import all models
+from backend.models.project import Project
 
 
 def init_database():
