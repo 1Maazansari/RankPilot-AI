@@ -44,7 +44,8 @@ class Settings(BaseSettings):
     # =====================================================
     # Database
     # =====================================================
-    DATABASE_URL: str | None = None
+    
+    DATABASE_URL: str = "sqlite:///./rankpilot.db"
 
     # =====================================================
     # Website Crawler
