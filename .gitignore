@@ -29,3 +29,7 @@ __pycache__/
 # ----------------------------
 .DS_Store
 Thumbs.db
+
+# Logs
+backend/logs/
+!backend/logs/.gitkeep
