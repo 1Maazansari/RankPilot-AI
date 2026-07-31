@@ -25,6 +25,9 @@ class Page(Base):
 
     __tablename__ = "pages"
 
+    # -----------------------------
+    # Primary Keys
+    # -----------------------------
     id: Mapped[int] = mapped_column(
         Integer,
         primary_key=True,
@@ -36,12 +39,28 @@ class Page(Base):
         nullable=False,
     )
 
+    # -----------------------------
+    # URL Information
+    # -----------------------------
     url: Mapped[str] = mapped_column(
         String(1000),
         nullable=False,
         index=True,
     )
 
+    final_url: Mapped[str | None] = mapped_column(
+        String(1000),
+        nullable=True,
+    )
+
+    canonical_url: Mapped[str | None] = mapped_column(
+        String(1000),
+        nullable=True,
+    )
+
+    # -----------------------------
+    # SEO Metadata
+    # -----------------------------
     title: Mapped[str | None] = mapped_column(
         String(500),
         nullable=True,
@@ -52,59 +71,157 @@ class Page(Base):
         nullable=True,
     )
 
-    h1: Mapped[str | None] = mapped_column(
-        String(500),
+    robots_meta: Mapped[str | None] = mapped_column(
+        String(255),
         nullable=True,
     )
 
-    canonical_url: Mapped[str | None] = mapped_column(
-        String(1000),
+    language: Mapped[str | None] = mapped_column(
+        String(20),
         nullable=True,
     )
 
+    charset: Mapped[str | None] = mapped_column(
+        String(50),
+        nullable=True,
+    )
+
+    # -----------------------------
+    # HTTP Information
+    # -----------------------------
     status_code: Mapped[int | None] = mapped_column(
         Integer,
         nullable=True,
     )
 
-    load_time: Mapped[float | None] = mapped_column(
+    response_time: Mapped[float | None] = mapped_column(
         Float,
         nullable=True,
     )
 
-    word_count: Mapped[int | None] = mapped_column(
+    page_size: Mapped[int | None] = mapped_column(
         Integer,
         nullable=True,
     )
 
+    # -----------------------------
+    # Content Analysis
+    # -----------------------------
+    word_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    h1_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    h2_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    image_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    missing_alt_count: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    internal_links: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    external_links: Mapped[int] = mapped_column(
+        Integer,
+        default=0,
+        nullable=False,
+    )
+
+    # -----------------------------
+    # SEO Flags
+    # -----------------------------
     is_indexable: Mapped[bool] = mapped_column(
         Boolean,
         default=True,
         nullable=False,
     )
 
+    has_https: Mapped[bool] = mapped_column(
+        Boolean,
+        default=True,
+        nullable=False,
+    )
+
+    has_open_graph: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+    )
+
+    has_twitter_card: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+    )
+
+    has_schema_markup: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+        nullable=False,
+    )
+
+    # -----------------------------
+    # Overall Score
+    # -----------------------------
+    seo_score: Mapped[float | None] = mapped_column(
+        Float,
+        nullable=True,
+    )
+
+    # -----------------------------
+    # Timestamp
+    # -----------------------------
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,
         nullable=False,
     )
 
-    # Relationship with Scan
+    # -----------------------------
+    # Relationships
+    # -----------------------------
     scan = relationship(
         "Scan",
         back_populates="pages",
     )
 
-    # Relationship with SEO Issues
     seo_issues = relationship(
         "SEOIssue",
         back_populates="page",
         cascade="all, delete-orphan",
     )
 
+    # -----------------------------
+    # Representation
+    # -----------------------------
     def __repr__(self) -> str:
         return (
-            f"<Page(id={self.id}, "
+            f"<Page("
+            f"id={self.id}, "
             f"url='{self.url}', "
-            f"status_code={self.status_code})>"
+            f"status_code={self.status_code}, "
+            f"seo_score={self.seo_score}"
+            f")>"
         )
