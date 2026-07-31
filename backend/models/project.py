@@ -5,7 +5,7 @@ Project model for RankPilot AI.
 from datetime import datetime
 
 from sqlalchemy import DateTime, Integer, String, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.database.base import Base
 
@@ -51,6 +51,13 @@ class Project(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
         nullable=False,
+    )
+
+    # Relationship: One Project -> Many Scans
+    scans = relationship(
+        "Scan",
+        back_populates="project",
+        cascade="all, delete-orphan",
     )
 
     def __repr__(self) -> str:
