@@ -75,6 +75,12 @@ class SEOIssue(Base):
         back_populates="seo_issues",
     )
 
+    ai_recommendations = relationship(
+    "AIRecommendation",
+    back_populates="seo_issue",
+    cascade="all, delete-orphan",
+)
+
     def __repr__(self) -> str:
         return (
             f"<SEOIssue(id={self.id}, "
