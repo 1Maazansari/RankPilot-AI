@@ -2,67 +2,114 @@
 URL management utilities for RankPilot AI.
 """
 
-from urllib.parse import urljoin, urlparse, urlunparse
+from urllib.parse import (
+    parse_qsl,
+    urlencode,
+    urljoin,
+    urlparse,
+    urlunparse,
+)
 
 
 class URLManager:
-    """Utility class for URL operations."""
+    """
+    Utility class for URL operations.
+    """
+
+    # File extensions we don't want to crawl
+    SKIP_EXTENSIONS = (
+        ".pdf",
+        ".jpg",
+        ".jpeg",
+        ".png",
+        ".gif",
+        ".svg",
+        ".webp",
+        ".ico",
+        ".zip",
+        ".rar",
+        ".mp4",
+        ".mp3",
+        ".avi",
+        ".mov",
+        ".css",
+        ".js",
+    )
+
+    # Tracking parameters to remove
+    TRACKING_PARAMS = {
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "gclid",
+        "fbclid",
+    }
 
     @staticmethod
     def normalize(url: str) -> str:
         """
-        Normalize a URL by:
-        - Removing fragments
-        - Removing trailing slash (except root)
+        Normalize URL.
         """
+
         parsed = urlparse(url)
 
-        parsed = parsed._replace(fragment="")
+        scheme = parsed.scheme.lower()
 
-        normalized = urlunparse(parsed)
+        netloc = parsed.netloc.lower()
 
-        if normalized.endswith("/") and parsed.path not in ("", "/"):
-            normalized = normalized[:-1]
+        path = parsed.path.rstrip("/")
 
-        return normalized
+        if path == "":
+            path = ""
+
+        # Remove fragments
+        fragment = ""
+
+        # Remove tracking query parameters
+        query = urlencode(
+            [
+                (k, v)
+                for k, v in parse_qsl(parsed.query)
+                if k not in URLManager.TRACKING_PARAMS
+            ]
+        )
+
+        return urlunparse(
+            (
+                scheme,
+                netloc,
+                path,
+                "",
+                query,
+                fragment,
+            )
+        )
 
     @staticmethod
     def to_absolute(base_url: str, url: str) -> str:
-        """
-        Convert relative URL into absolute URL.
-        """
         return urljoin(base_url, url)
 
     @staticmethod
     def get_domain(url: str) -> str:
-        """
-        Return domain name.
-        """
         return urlparse(url).netloc.lower()
 
     @staticmethod
     def is_internal(base_url: str, target_url: str) -> bool:
-        """
-        Check whether target URL belongs to the same domain.
-        """
         return (
             URLManager.get_domain(base_url)
             == URLManager.get_domain(target_url)
         )
 
     @staticmethod
-    def remove_query(url: str) -> str:
+    def is_html(url: str) -> bool:
         """
-        Remove query parameters.
+        Ignore PDFs, images, videos, etc.
         """
-        parsed = urlparse(url)
-        parsed = parsed._replace(query="")
-        return urlunparse(parsed)
 
-    @staticmethod
-    def is_http(url: str) -> bool:
-        """
-        Check if URL uses HTTP or HTTPS.
-        """
-        scheme = urlparse(url).scheme.lower()
-        return scheme in ("http", "https")
+        parsed = urlparse(url)
+
+        path = parsed.path.lower()
+
+        return not path.endswith(URLManager.SKIP_EXTENSIONS)
