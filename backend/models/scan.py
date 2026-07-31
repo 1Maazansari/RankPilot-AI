@@ -11,6 +11,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from backend.database.base import Base
 
 
+
 class ScanStatus(str, Enum):
     """Status of a scan."""
 
@@ -68,6 +69,12 @@ class Scan(Base):
         "Project",
         back_populates="scans",
     )
+    # Relationship with Pages
+    pages = relationship(
+    "Page",
+    back_populates="scan",
+    cascade="all, delete-orphan",
+)
 
     def __repr__(self):
         return (
