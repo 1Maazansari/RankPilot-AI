@@ -3,7 +3,7 @@ import logging
 import requests
 from bs4 import BeautifulSoup
 
-from config import SCANNER_TIMEOUT_SECONDS
+from backend.config import SCANNER_TIMEOUT_SECONDS
 from .client import session
 from .headings import count_h1, count_h2
 from .images import count_images, count_missing_alt_text
@@ -82,7 +82,5 @@ def _download_html(url: str) -> str:
         response.status_code,
         response.encoding,
     )
-
-    
 
     return response.text

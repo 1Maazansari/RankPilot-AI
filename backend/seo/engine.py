@@ -2,11 +2,11 @@
 
 from pydantic import BaseModel
 
-from scanner.models import ScannerResponse
-from score.engine import analyze_score
-from score.models import ScoreResult
-from seo.evaluator import evaluate
-from seo.models import SEOIssue
+from backend.scanner.models import ScannerResponse
+from backend.score.engine import analyze_score
+from backend.score.models import ScoreResult
+from backend.seo.evaluator import evaluate
+from backend.seo.models import SEOIssue
 
 
 class SEOAnalysisResult(BaseModel):

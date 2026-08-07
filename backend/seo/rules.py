@@ -1,7 +1,8 @@
 """Independent SEO rule checks for scanner responses."""
 
-from scanner.models import ScannerResponse
-from seo.constants import (
+from backend.scanner.models import ScannerResponse
+
+from backend.seo.constants import (
     H1_MAX_COUNT,
     H1_MIN_COUNT,
     H2_MIN_COUNT,
@@ -11,7 +12,11 @@ from seo.constants import (
     TITLE_MAX_LENGTH,
     TITLE_MIN_LENGTH,
 )
-from seo.models import Category, SEOIssue, Severity
+from backend.seo.models import (
+    Category,
+    SEOIssue,
+    Severity,
+)
 
 
 def check_missing_title(scan: ScannerResponse) -> SEOIssue | None:

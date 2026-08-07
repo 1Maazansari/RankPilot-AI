@@ -1,8 +1,6 @@
 """Core SEO score calculation logic."""
 
-from seo.models import SEOIssue, Severity
-
-from score.constants import (
+from backend.score.constants import (
     MAX_SCORE,
     CRITICAL_PENALTY,
     HIGH_PENALTY,
@@ -13,8 +11,8 @@ from score.constants import (
     GRADE_C,
     GRADE_D,
 )
-
-from score.models import ScoreResult, ScoreSummary
+from backend.score.models import ScoreResult, ScoreSummary
+from backend.seo.models import SEOIssue, Severity
 
 
 def calculate_score(issues: list[SEOIssue]) -> ScoreResult:

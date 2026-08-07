@@ -2,9 +2,9 @@
 
 from collections.abc import Callable
 
-from scanner.models import ScannerResponse
-from seo.models import SEOIssue
-from seo.rules import (
+from backend.scanner.models import ScannerResponse
+from backend.seo.models import SEOIssue
+from backend.seo.rules import (
     check_meta_description_too_long,
     check_meta_description_too_short,
     check_missing_alt_text,
@@ -25,7 +25,6 @@ from seo.rules import (
 )
 
 RuleFunction = Callable[[ScannerResponse], SEOIssue | None]
-
 
 SEO_RULES: list[RuleFunction] = [
     check_missing_title,
@@ -50,10 +49,12 @@ SEO_RULES: list[RuleFunction] = [
 
 def evaluate(scan: ScannerResponse) -> list[SEOIssue]:
     """Run all SEO rules and return the issues they report."""
+
     issues: list[SEOIssue] = []
 
     for rule in SEO_RULES:
         issue = rule(scan)
+
         if issue is not None:
             issues.append(issue)
 

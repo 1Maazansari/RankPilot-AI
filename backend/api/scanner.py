@@ -3,16 +3,18 @@ import logging
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, HttpUrl
 
-from ai.engine import analyze_ai
-from ai.models import AIRecommendationResult
-from scanner.models import ScannerResponse
-from scanner.scanner import (
+from backend.ai.engine import analyze_ai
+from backend.ai.models import AIRecommendationResult
+from backend.scanner.models import ScannerResponse
+from backend.scanner.scanner import (
     ScannerTimeoutError,
     WebsiteUnavailableError,
     scan_website,
 )
-from seo.engine import SEOAnalysisResult, analyze
-
+from backend.seo.engine import (
+    SEOAnalysisResult,
+    analyze,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -34,10 +36,18 @@ class ScanResponse(BaseModel):
     response_model=ScanResponse,
     status_code=status.HTTP_200_OK,
     responses={
-        status.HTTP_400_BAD_REQUEST: {"description": "Invalid URL"},
-        status.HTTP_503_SERVICE_UNAVAILABLE: {"description": "Website unavailable"},
-        status.HTTP_504_GATEWAY_TIMEOUT: {"description": "Website timeout"},
-        status.HTTP_500_INTERNAL_SERVER_ERROR: {"description": "Unexpected error"},
+        status.HTTP_400_BAD_REQUEST: {
+            "description": "Invalid URL",
+        },
+        status.HTTP_503_SERVICE_UNAVAILABLE: {
+            "description": "Website unavailable",
+        },
+        status.HTTP_504_GATEWAY_TIMEOUT: {
+            "description": "Website timeout",
+        },
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {
+            "description": "Unexpected error",
+        },
     },
 )
 def scan(request: ScanRequest) -> ScanResponse:
@@ -73,9 +83,9 @@ def scan(request: ScanRequest) -> ScanResponse:
             detail="Timeout",
         ) from exc
 
-    except Exception as exc:
+    except Exception:
         logger.exception("Unexpected scanner API error")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Unexpected Error",
-        ) from exc
+        )

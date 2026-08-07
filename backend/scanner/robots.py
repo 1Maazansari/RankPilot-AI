@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from config import SCANNER_ASSET_TIMEOUT_SECONDS
+from backend.config import SCANNER_ASSET_TIMEOUT_SECONDS
 from .client import session
 
 

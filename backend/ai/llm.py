@@ -5,7 +5,10 @@ import os
 from dotenv import load_dotenv
 from google import genai
 
-from ai.models import AIRecommendation, AIRecommendationResult
+from backend.ai.models import (
+    AIRecommendation,
+    AIRecommendationResult,
+)
 
 # --------------------------------------------------
 # Load Environment Variables

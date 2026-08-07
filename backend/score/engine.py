@@ -1,9 +1,8 @@
 """Score engine for SEO analysis."""
 
-from seo.models import SEOIssue
-
-from score.calculator import calculate_score
-from score.models import ScoreResult
+from backend.score.calculator import calculate_score
+from backend.score.models import ScoreResult
+from backend.seo.models import SEOIssue
 
 
 def analyze_score(issues: list[SEOIssue]) -> ScoreResult:

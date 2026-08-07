@@ -1,6 +1,6 @@
 import requests
 
-from config import SCANNER_USER_AGENT
+from backend.config import SCANNER_USER_AGENT
 
 session = requests.Session()
 

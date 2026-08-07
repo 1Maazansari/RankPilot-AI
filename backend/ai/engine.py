@@ -1,11 +1,12 @@
-"""AI recommendation engine."""
+"""
+AI recommendation engine.
+"""
 
-from scanner.models import ScannerResponse
-from seo.engine import SEOAnalysisResult
-
-from ai.llm import generate_recommendations
-from ai.models import AIRecommendationResult
-from ai.prompts import SYSTEM_PROMPT
+from backend.ai.llm import generate_recommendations
+from backend.ai.models import AIRecommendationResult
+from backend.ai.prompts import SYSTEM_PROMPT
+from backend.scanner.models import ScannerResponse
+from backend.seo.engine import SEOAnalysisResult
 
 
 def analyze_ai(
