@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from backend.api.scanner import router as scanner_router
 from backend.api.site_audit import router as site_audit_router
+from backend.database.init_db import init_database
 
 
 app = FastAPI(
@@ -16,6 +17,12 @@ app.include_router(scanner_router)
 
 # Pro Site Audit API
 app.include_router(site_audit_router)
+
+
+@app.on_event("startup")
+def initialize_database() -> None:
+    """Ensure the local database is ready before audit persistence is used."""
+    init_database()
 
 
 @app.exception_handler(RequestValidationError)

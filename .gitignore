@@ -33,3 +33,7 @@ Thumbs.db
 # Logs
 backend/logs/
 !backend/logs/.gitkeep
+
+# Local SQLite database
+rankpilot.db
+*.db

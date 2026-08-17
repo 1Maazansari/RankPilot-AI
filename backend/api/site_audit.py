@@ -3,14 +3,18 @@ API endpoint for full website (multi-page) SEO audits.
 """
 
 import logging
+from time import perf_counter
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field, HttpUrl
+from sqlalchemy.orm import Session
 
 from backend.audit.aggregator import generate_crawl_report
 from backend.crawler.crawler import WebsiteCrawler
 from backend.scanner.validators import validate_url
 from backend.schemas.crawl_report import CrawlReport
+from backend.database.session import get_db
+from backend.services.audit_persistence_service import AuditPersistenceService
 
 logger = logging.getLogger(__name__)
 
@@ -30,12 +34,13 @@ class SiteAuditRequest(BaseModel):
     response_model=CrawlReport,
     status_code=status.HTTP_200_OK,
 )
-def site_audit(request: SiteAuditRequest) -> CrawlReport:
+def site_audit(request: SiteAuditRequest, db: Session = Depends(get_db)) -> CrawlReport:
     """
     Perform a multi-page SEO audit.
     """
 
     try:
+        started = perf_counter()
         validated_url = validate_url(str(request.url))
 
         crawler = WebsiteCrawler(
@@ -48,6 +53,15 @@ def site_audit(request: SiteAuditRequest) -> CrawlReport:
 
         report = generate_crawl_report(
             crawl,
+        )
+
+        AuditPersistenceService().persist(
+            db,
+            requested_url=validated_url,
+            max_pages=request.max_pages,
+            crawl=crawl,
+            report=report,
+            duration_seconds=perf_counter() - started,
         )
 
         return report

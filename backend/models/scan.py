@@ -5,7 +5,7 @@ Scan model for RankPilot AI.
 from datetime import datetime
 from enum import Enum
 
-from sqlalchemy import DateTime, Enum as SQLEnum, Float, ForeignKey, Integer
+from sqlalchemy import Boolean, DateTime, Enum as SQLEnum, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from backend.database.base import Base
@@ -48,6 +48,14 @@ class Scan(Base):
         nullable=True,
     )
 
+    requested_url: Mapped[str | None] = mapped_column(String(1000), nullable=True)
+    max_pages: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    total_pages: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    failed_pages: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    crawl_complete: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    grade: Mapped[str | None] = mapped_column(String(2), nullable=True)
+    duration_seconds: Mapped[float | None] = mapped_column(Float, nullable=True)
+
     started_at: Mapped[datetime | None] = mapped_column(
         DateTime,
         nullable=True,
@@ -71,10 +79,15 @@ class Scan(Base):
     )
     # Relationship with Pages
     pages = relationship(
-    "Page",
-    back_populates="scan",
-    cascade="all, delete-orphan",
-)
+        "Page",
+        back_populates="scan",
+        cascade="all, delete-orphan",
+    )
+    seo_issues = relationship(
+        "SEOIssue",
+        back_populates="scan",
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self):
         return (

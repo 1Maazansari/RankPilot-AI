@@ -33,9 +33,15 @@ class SEOIssue(Base):
         index=True,
     )
 
-    page_id: Mapped[int] = mapped_column(
-        ForeignKey("pages.id"),
+    scan_id: Mapped[int] = mapped_column(
+        ForeignKey("scans.id"),
         nullable=False,
+    )
+
+    # Null only for site-wide findings (for example, missing robots.txt).
+    page_id: Mapped[int | None] = mapped_column(
+        ForeignKey("pages.id"),
+        nullable=True,
     )
 
     issue_type: Mapped[str] = mapped_column(
@@ -75,11 +81,16 @@ class SEOIssue(Base):
         back_populates="seo_issues",
     )
 
+    scan = relationship(
+        "Scan",
+        back_populates="seo_issues",
+    )
+
     ai_recommendations = relationship(
-    "AIRecommendation",
-    back_populates="seo_issue",
-    cascade="all, delete-orphan",
-)
+        "AIRecommendation",
+        back_populates="seo_issue",
+        cascade="all, delete-orphan",
+    )
 
     def __repr__(self) -> str:
         return (
