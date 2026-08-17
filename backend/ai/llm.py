@@ -1,23 +1,20 @@
 import json
 import logging
-import os
-
-from dotenv import load_dotenv
 from google import genai
 
 from backend.ai.models import (
     AIRecommendation,
     AIRecommendationResult,
 )
+from backend.ai.prompts import SYSTEM_PROMPT
+from backend.core.config import settings
 
 # --------------------------------------------------
 # Load Environment Variables
 # --------------------------------------------------
 
-load_dotenv()
-
-API_KEY = os.getenv("GEMINI_API_KEY")
-MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
+API_KEY = settings.GEMINI_API_KEY
+MODEL = settings.GEMINI_MODEL
 
 if not API_KEY:
     raise ValueError("GEMINI_API_KEY not found in .env")
@@ -25,66 +22,6 @@ if not API_KEY:
 client = genai.Client(api_key=API_KEY)
 
 logging.basicConfig(level=logging.INFO)
-
-# --------------------------------------------------
-# System Prompt
-# --------------------------------------------------
-
-SYSTEM_PROMPT = """
-You are RankPilot AI.
-
-You are an expert Technical SEO Consultant.
-
-Analyze the provided website scan and SEO issues.
-
-Your objective is to help website owners improve SEO rankings.
-
-Instructions:
-
-- Prioritize recommendations from highest impact to lowest.
-- Recommend ONLY fixes based on the provided scan.
-- Do NOT invent issues.
-- Explain WHY each issue matters.
-- Provide practical implementation advice.
-- Keep recommendations concise.
-- Maximum 5 recommendations.
-
-Return ONLY valid JSON.
-
-JSON format:
-
-{
-  "recommendations": [
-    {
-      "priority": 1,
-      "title": "...",
-      "reason": "...",
-      "impact": "High",
-      "estimated_effort": "...",
-      "action": "..."
-    }
-  ]
-}
-
-Rules:
-
-- priority must be integer
-- impact must be one of:
-  High
-  Medium
-  Low
-
-Do not return markdown.
-
-Do not wrap JSON inside ```.
-
-Return JSON only.
-"""
-
-# --------------------------------------------------
-# Gemini Recommendation Generator
-# --------------------------------------------------
-
 
 def generate_recommendations(prompt: str) -> AIRecommendationResult:
     """

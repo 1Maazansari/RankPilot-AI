@@ -4,6 +4,7 @@ from fastapi.responses import JSONResponse
 
 from backend.api.scanner import router as scanner_router
 from backend.api.site_audit import router as site_audit_router
+from backend.api.recommendations import router as recommendations_router
 from backend.database.init_db import init_database
 
 
@@ -17,6 +18,7 @@ app.include_router(scanner_router)
 
 # Pro Site Audit API
 app.include_router(site_audit_router)
+app.include_router(recommendations_router)
 
 
 @app.on_event("startup")

@@ -4,7 +4,6 @@ AI recommendation engine.
 
 from backend.ai.llm import generate_recommendations
 from backend.ai.models import AIRecommendationResult
-from backend.ai.prompts import SYSTEM_PROMPT
 from backend.scanner.models import ScannerResponse
 from backend.seo.engine import SEOAnalysisResult
 
@@ -18,8 +17,6 @@ def analyze_ai(
     """
 
     prompt = f"""
-{SYSTEM_PROMPT}
-
 Website:
 {scan.model_dump_json(indent=2)}
 
