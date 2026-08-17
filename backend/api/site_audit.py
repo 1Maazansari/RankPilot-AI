@@ -5,10 +5,11 @@ API endpoint for full website (multi-page) SEO audits.
 import logging
 
 from fastapi import APIRouter, HTTPException, status
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 from backend.audit.aggregator import generate_crawl_report
 from backend.crawler.crawler import WebsiteCrawler
+from backend.scanner.validators import validate_url
 from backend.schemas.crawl_report import CrawlReport
 
 logger = logging.getLogger(__name__)
@@ -21,7 +22,7 @@ router = APIRouter(
 
 class SiteAuditRequest(BaseModel):
     url: HttpUrl
-    max_pages: int = 20
+    max_pages: int = Field(default=20, ge=1, le=100)
 
 
 @router.post(
@@ -35,24 +36,33 @@ def site_audit(request: SiteAuditRequest) -> CrawlReport:
     """
 
     try:
+        validated_url = validate_url(str(request.url))
+
         crawler = WebsiteCrawler(
             max_pages=request.max_pages,
         )
 
-        pages = crawler.crawl(
-            str(request.url),
+        crawl = crawler.crawl_with_result(
+            validated_url,
         )
 
         report = generate_crawl_report(
-            pages,
+            crawl,
         )
 
         return report
 
-    except Exception as exc:
+    except ValueError as exc:
+        logger.warning("Invalid site audit request: %s", exc)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid URL",
+        ) from exc
+
+    except Exception:
         logger.exception("Site audit failed.")
 
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(exc),
-        ) from exc
+            detail="Site audit could not be completed.",
+        )

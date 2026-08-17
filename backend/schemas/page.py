@@ -30,6 +30,8 @@ class PageBase(BaseModel):
 
     page_size: int | None = None
 
+    content_type: str | None = None
+
     word_count: int = 0
 
     h1_count: int = 0
@@ -53,6 +55,16 @@ class PageBase(BaseModel):
     has_twitter_card: bool = False
 
     has_schema_markup: bool = False
+
+    og_title: str | None = None
+
+    og_description: str | None = None
+
+    og_image: str | None = None
+
+    og_url: str | None = None
+
+    og_type: str | None = None
 
     seo_score: float | None = None
 

@@ -6,18 +6,23 @@ reuses the existing SEO engine, and generates a CrawlReport.
 """
 
 from backend.audit.adapter import page_to_scanner_response
-from backend.schemas.page import PageAnalysis
 from backend.schemas.crawl_report import (
+    CrawlExecution,
     CrawlReport,
     CrawlSummary,
     PageReport,
 )
 
 from backend.seo.engine import analyze
+from backend.seo.rules import check_missing_robots_txt, check_missing_sitemap
+from backend.score.calculator import calculate_score
+
+
+SITE_LEVEL_RULE_IDS = {"missing_robots_txt", "missing_sitemap"}
 
 
 def generate_crawl_report(
-    pages: list[PageAnalysis],
+    crawl: CrawlExecution,
 ) -> CrawlReport:
     """
     Generate a complete website audit report from crawled pages.
@@ -36,11 +41,18 @@ def generate_crawl_report(
     # Analyze each crawled page
     # -----------------------------------------
 
-    for page in pages:
+    for page in crawl.pages:
 
-        scanner_response = page_to_scanner_response(page)
+        scanner_response = page_to_scanner_response(
+            page,
+            robots_found=crawl.robots_txt_found,
+            sitemap_found=crawl.sitemap_found,
+        )
 
-        seo_result = analyze(scanner_response)
+        seo_result = analyze(
+            scanner_response,
+            excluded_rule_ids=SITE_LEVEL_RULE_IDS,
+        )
 
         total_score += seo_result.score.score
 
@@ -62,9 +74,29 @@ def generate_crawl_report(
     # Calculate overall score
     # -----------------------------------------
 
-    if pages:
+    site_issues = []
+    if crawl.pages:
+        site_scan = page_to_scanner_response(
+            crawl.pages[0],
+            robots_found=crawl.robots_txt_found,
+            sitemap_found=crawl.sitemap_found,
+        )
+        for rule in (check_missing_robots_txt, check_missing_sitemap):
+            issue = rule(site_scan)
+            if issue is not None:
+                site_issues.append(issue)
+
+    site_score = calculate_score(site_issues)
+    site_penalty = 100 - site_score.score
+
+    critical += site_score.summary.critical
+    high += site_score.summary.high
+    medium += site_score.summary.medium
+    low += site_score.summary.low
+
+    if crawl.pages:
         average_score = round(
-            total_score / len(pages),
+            max(0, total_score / len(crawl.pages) - site_penalty),
             2,
         )
     else:
@@ -97,9 +129,16 @@ def generate_crawl_report(
         high=high,
         medium=medium,
         low=low,
+        crawl_complete=not crawl.failures,
+        failed_pages=len(crawl.failures),
+        robots_txt_found=crawl.robots_txt_found,
+        sitemap_found=crawl.sitemap_found,
+        sitemap_urls=crawl.sitemap_urls,
     )
 
     return CrawlReport(
         summary=summary,
         pages=page_reports,
+        site_issues=site_issues,
+        failures=crawl.failures,
     )

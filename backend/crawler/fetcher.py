@@ -18,6 +18,7 @@ class FetchResult:
     html: str
     response_time: float
     content_type: str
+    page_size: int
 
 
 class HTMLFetcher:
@@ -53,4 +54,5 @@ class HTMLFetcher:
             html=response.text,
             response_time=response.elapsed.total_seconds(),
             content_type=response.headers.get("Content-Type", ""),
+            page_size=len(response.content),
         )

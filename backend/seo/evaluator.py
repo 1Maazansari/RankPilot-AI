@@ -47,12 +47,17 @@ SEO_RULES: list[RuleFunction] = [
 ]
 
 
-def evaluate(scan: ScannerResponse) -> list[SEOIssue]:
+def evaluate(
+    scan: ScannerResponse,
+    excluded_rule_ids: set[str] | None = None,
+) -> list[SEOIssue]:
     """Run all SEO rules and return the issues they report."""
 
     issues: list[SEOIssue] = []
 
     for rule in SEO_RULES:
+        if rule.__name__.removeprefix("check_") in (excluded_rule_ids or set()):
+            continue
         issue = rule(scan)
 
         if issue is not None:

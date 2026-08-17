@@ -3,10 +3,17 @@ Website crawler for RankPilot AI.
 """
 
 from collections import deque
+import logging
 
 from backend.crawler.fetcher import HTMLFetcher
 from backend.crawler.parser import HTMLParser
+from backend.crawler.robots import discover_robots
+from backend.crawler.sitemap import discover_sitemap
 from backend.crawler.url_manager import URLManager
+from backend.schemas.crawl_report import CrawlExecution, CrawlFailure
+
+
+logger = logging.getLogger(__name__)
 
 
 class WebsiteCrawler:
@@ -25,12 +32,25 @@ class WebsiteCrawler:
         Crawl a website starting from the given URL.
         """
 
+        return self.crawl_with_result(start_url).pages
+
+    def crawl_with_result(self, start_url: str) -> CrawlExecution:
+        """Crawl a site and return pages with site-level crawl metadata."""
+
         start_url = URLManager.normalize(start_url)
+
+        robots = discover_robots(start_url, timeout=self.fetcher.timeout)
+        sitemap = discover_sitemap(
+            start_url,
+            robots.sitemap_urls,
+            timeout=self.fetcher.timeout,
+        )
 
         visited = set()
         queue = deque([start_url])
 
         pages = []
+        failures = []
 
         while queue and len(pages) < self.max_pages:
 
@@ -55,6 +75,11 @@ class WebsiteCrawler:
                 analysis = self.parser.parse(
                     result.html,
                     result.url,
+                    requested_url=current_url,
+                    status_code=result.status_code,
+                    response_time=result.response_time,
+                    page_size=result.page_size,
+                    content_type=result.content_type,
                 )
 
                 # ---------------------------------
@@ -95,7 +120,20 @@ class WebsiteCrawler:
 
             except Exception as e:
 
-                print(f"✗ Failed: {current_url}")
-                print(e)
+                failures.append(
+                    CrawlFailure(
+                        url=current_url,
+                        reason="fetch_or_parse_failed",
+                    )
+                )
 
-        return pages
+                print(f"✗ Failed: {current_url}")
+                logger.warning("Failed to crawl: %s", current_url, exc_info=True)
+
+        return CrawlExecution(
+            pages=pages,
+            failures=failures,
+            robots_txt_found=robots.found,
+            sitemap_found=sitemap.found,
+            sitemap_urls=sitemap.urls,
+        )

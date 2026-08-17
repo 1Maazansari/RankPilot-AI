@@ -7,7 +7,12 @@ from backend.schemas.page import PageAnalysis
 from backend.scanner.models import ScannerResponse
 
 
-def page_to_scanner_response(page: PageAnalysis) -> ScannerResponse:
+def page_to_scanner_response(
+    page: PageAnalysis,
+    *,
+    robots_found: bool = False,
+    sitemap_found: bool = False,
+) -> ScannerResponse:
     """
     Convert a crawler PageAnalysis object into the ScannerResponse
     format expected by the SEO engine.
@@ -30,11 +35,11 @@ def page_to_scanner_response(page: PageAnalysis) -> ScannerResponse:
         favicon="",           # Not collected by crawler yet
 
         # Open Graph
-        og_title="",          # Future enhancement
-        og_description="",    # Future enhancement
-        og_image="",          # Future enhancement
-        og_url="",            # Future enhancement
-        og_type="",           # Future enhancement
+        og_title=page.og_title or "",
+        og_description=page.og_description or "",
+        og_image=page.og_image or "",
+        og_url=page.og_url or "",
+        og_type=page.og_type or "",
 
         # Twitter Cards
         twitter_card="" if not page.has_twitter_card else "present",
@@ -54,6 +59,6 @@ def page_to_scanner_response(page: PageAnalysis) -> ScannerResponse:
         internal_links=page.internal_links,
 
         # Technical Files
-        robots_found=bool(page.robots_meta),
-        sitemap_found=False,   # Will be added in Site Audit
+        robots_found=robots_found,
+        sitemap_found=sitemap_found,
     )

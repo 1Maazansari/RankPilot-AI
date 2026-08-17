@@ -16,12 +16,15 @@ class SEOAnalysisResult(BaseModel):
     score: ScoreResult
 
 
-def analyze(scan: ScannerResponse) -> SEOAnalysisResult:
+def analyze(
+    scan: ScannerResponse,
+    excluded_rule_ids: set[str] | None = None,
+) -> SEOAnalysisResult:
     """
     Evaluate SEO rules for a scanner response and calculate the SEO score.
     """
 
-    issues = evaluate(scan)
+    issues = evaluate(scan, excluded_rule_ids=excluded_rule_ids)
     score = analyze_score(issues)
 
     return SEOAnalysisResult(

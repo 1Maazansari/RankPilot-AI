@@ -15,7 +15,17 @@ class HTMLParser:
     Parses HTML pages and extracts SEO information.
     """
 
-    def parse(self, html: str, url: str) -> PageAnalysis:
+    def parse(
+        self,
+        html: str,
+        url: str,
+        *,
+        requested_url: str | None = None,
+        status_code: int | None = None,
+        response_time: float | None = None,
+        page_size: int | None = None,
+        content_type: str | None = None,
+    ) -> PageAnalysis:
         """
         Parse HTML into a PageAnalysis object.
         """
@@ -27,14 +37,21 @@ class HTMLParser:
             url,
         )
 
+        robots_meta = self._get_robots_meta(soup)
+
         return PageAnalysis(
-            url=url,
+            url=requested_url or url,
+            final_url=url,
             title=self._get_title(soup),
             meta_description=self._get_meta_description(soup),
             canonical_url=self._get_canonical(soup),
             language=self._get_language(soup),
             charset=self._get_charset(soup),
-            robots_meta=self._get_robots_meta(soup),
+            robots_meta=robots_meta,
+            status_code=status_code,
+            response_time=response_time,
+            page_size=page_size,
+            content_type=content_type,
             word_count=self._get_word_count(soup),
             h1_count=self._get_h1_count(soup),
             h2_count=self._get_h2_count(soup),
@@ -42,6 +59,13 @@ class HTMLParser:
             missing_alt_count=self._get_missing_alt_count(soup),
             internal_links=len(internal_links),
             external_links=len(external_links),
+            has_https=urlparse(url).scheme.lower() == "https",
+            is_indexable=self._is_indexable(robots_meta),
+            og_title=self._get_open_graph(soup, "og:title"),
+            og_description=self._get_open_graph(soup, "og:description"),
+            og_image=self._get_open_graph(soup, "og:image"),
+            og_url=self._get_open_graph(soup, "og:url"),
+            og_type=self._get_open_graph(soup, "og:type"),
             has_open_graph=self._has_open_graph(soup),
             has_twitter_card=self._has_twitter_card(soup),
             has_schema_markup=self._has_schema_markup(soup),
@@ -151,6 +175,16 @@ class HTMLParser:
             return tag.get("content")
         return None
 
+    def _is_indexable(self, robots_meta: str | None) -> bool:
+        if not robots_meta:
+            return True
+
+        directives = {
+            directive.strip().lower()
+            for directive in robots_meta.split(",")
+        }
+        return "noindex" not in directives and "none" not in directives
+
     # ======================================================
     # Content
     # ======================================================
@@ -195,6 +229,22 @@ class HTMLParser:
             )
             is not None
         )
+
+    def _get_open_graph(
+        self,
+        soup: BeautifulSoup,
+        property_name: str,
+    ) -> str | None:
+        tag = soup.find(
+            "meta",
+            attrs={"property": property_name},
+        )
+        if tag is None:
+            tag = soup.find(
+                "meta",
+                attrs={"name": property_name},
+            )
+        return tag.get("content") if tag else None
 
     def _has_twitter_card(self, soup: BeautifulSoup) -> bool:
         return (
