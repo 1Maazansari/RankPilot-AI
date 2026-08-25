@@ -116,7 +116,7 @@ class WebsiteCrawler:
                 # ---------------------------------
                 pages.append(analysis)
 
-                print(f"✓ Crawled: {current_url}")
+                print(f"[OK] Crawled: {current_url}")
 
             except Exception as e:
 
@@ -127,7 +127,7 @@ class WebsiteCrawler:
                     )
                 )
 
-                print(f"✗ Failed: {current_url}")
+                print(f"[FAIL] Failed: {current_url}")
                 logger.warning("Failed to crawl: %s", current_url, exc_info=True)
 
         return CrawlExecution(

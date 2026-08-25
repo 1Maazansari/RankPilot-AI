@@ -55,7 +55,7 @@ def site_audit(request: SiteAuditRequest, db: Session = Depends(get_db)) -> Craw
             crawl,
         )
 
-        AuditPersistenceService().persist(
+        scan = AuditPersistenceService().persist(
             db,
             requested_url=validated_url,
             max_pages=request.max_pages,
@@ -64,6 +64,7 @@ def site_audit(request: SiteAuditRequest, db: Session = Depends(get_db)) -> Craw
             duration_seconds=perf_counter() - started,
         )
 
+        report.scan_id = scan.id
         return report
 
     except ValueError as exc:

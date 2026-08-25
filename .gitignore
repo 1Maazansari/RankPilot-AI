@@ -37,3 +37,5 @@ backend/logs/
 # Local SQLite database
 rankpilot.db
 *.db
+node_modules
+

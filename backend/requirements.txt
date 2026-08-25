@@ -10,3 +10,4 @@ validators
 sqlalchemy
 alembic
 pytest
+google-genai

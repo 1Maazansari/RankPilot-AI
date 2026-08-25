@@ -131,6 +131,7 @@ def test_site_audit_returns_existing_report_contract_after_persistence(tmp_path,
         response = client.post("/site-audit", json={"url": "https://example.com", "max_pages": 3})
 
     assert response.status_code == 200
-    assert set(response.json()) == {"summary", "pages", "site_issues", "failures"}
+    assert set(response.json()) == {"summary", "pages", "site_issues", "failures", "scan_id"}
+    assert response.json()["scan_id"] is not None
     session = testing_session()
     assert session.query(Scan).one().max_pages == 3

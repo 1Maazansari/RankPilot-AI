@@ -81,3 +81,5 @@ class CrawlReport(BaseModel):
     site_issues: list[SEOIssue]
 
     failures: list[CrawlFailure]
+
+    scan_id: int | None = None
