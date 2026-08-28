@@ -171,3 +171,6 @@ export async function checkHealth(): Promise<HealthStatus> {
 }
 
 export { ApiError };
+
+export { getScanRecommendations, siteAudit } from "./site-audit";
+export type { AIRecommendation, AIRecommendationResult, CrawlFailure, CrawlReport, CrawlSummary, PageReport } from "./site-audit";

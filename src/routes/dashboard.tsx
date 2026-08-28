@@ -162,10 +162,10 @@ function DashboardPage() {
             </div>
           </div>
           <Link
-            to="/subscription"
+            to="/multi-page-audit"
             className="inline-flex items-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110"
           >
-            View plans
+            Start multi-page audit
           </Link>
         </section>
       </main>

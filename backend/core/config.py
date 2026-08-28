@@ -39,7 +39,8 @@ class Settings(BaseSettings):
     LLM_PROVIDER: str = "gemini"
 
     GEMINI_API_KEY: str = Field(default="")
-    GEMINI_MODEL: str = "gemini-2.5-flash"
+    GEMINI_MODEL: str = "gemini-3.5-flash"
+    GEMINI_FALLBACK_MODEL: str = "gemini-3.5-flash-lite"
 
     # =====================================================
     # Database

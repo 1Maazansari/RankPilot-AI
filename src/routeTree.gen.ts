@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzeRouteImport } from './routes/analyze'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as MultiPageAuditRouteImport } from './routes/multi-page-audit'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
 
@@ -30,6 +31,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MultiPageAuditRoute = MultiPageAuditRouteImport.update({
+  id: '/multi-page-audit',
+  path: '/multi-page-audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SubscriptionRoute = SubscriptionRouteImport.update({
   id: '/subscription',
   path: '/subscription',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
@@ -60,20 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/analyze' | '/dashboard' | '/subscription' | '/api/public/health'
+    | '/'
+    | '/analyze'
+    | '/dashboard'
+    | '/multi-page-audit'
+    | '/subscription'
+    | '/api/public/health'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analyze' | '/dashboard' | '/subscription' | '/api/public/health'
+  to:
+    | '/'
+    | '/analyze'
+    | '/dashboard'
+    | '/multi-page-audit'
+    | '/subscription'
+    | '/api/public/health'
   id:
     | '__root__'
     | '/'
     | '/analyze'
     | '/dashboard'
+    | '/multi-page-audit'
     | '/subscription'
     | '/api/public/health'
   fileRoutesById: FileRoutesById
@@ -82,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzeRoute: typeof AnalyzeRoute
   DashboardRoute: typeof DashboardRoute
+  MultiPageAuditRoute: typeof MultiPageAuditRoute
   SubscriptionRoute: typeof SubscriptionRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
 }
@@ -109,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/multi-page-audit': {
+      id: '/multi-page-audit'
+      path: '/multi-page-audit'
+      fullPath: '/multi-page-audit'
+      preLoaderRoute: typeof MultiPageAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/subscription': {
       id: '/subscription'
       path: '/subscription'
@@ -130,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzeRoute: AnalyzeRoute,
   DashboardRoute: DashboardRoute,
+  MultiPageAuditRoute: MultiPageAuditRoute,
   SubscriptionRoute: SubscriptionRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
 }

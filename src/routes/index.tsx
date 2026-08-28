@@ -14,9 +14,9 @@ import { PRICING_PLANS } from "@/lib/pricing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RankX — Instant AI SEO Audits for Any Web Page" },
+      { title: "RankX - Instant AI SEO Audits for Any Web Page" },
       { name: "description", content: "Paste any URL. RankX returns an SEO score, every issue with a fix, metadata and media analysis, and AI recommendations." },
-      { property: "og:title", content: "RankX — Instant AI SEO Audits" },
+      { property: "og:title", content: "RankX - Instant AI SEO Audits" },
       { property: "og:description", content: "AI-powered SEO intelligence in under a minute. Scores, fixes, action plan." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -121,9 +121,15 @@ function Landing() {
                   >
                     Analyze <ArrowRight className="h-4 w-4" />
                   </button>
+                  <Link
+                    to="/multi-page-audit"
+                    className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-primary/25 bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-accent"
+                  >
+                    Multi-Page Audit
+                  </Link>
                 </div>
                 {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
-                <p className="mt-3 text-xs text-muted-foreground">Free scan · No signup required · Results in 60s</p>
+                <p className="mt-3 text-xs text-muted-foreground">Free scan ‚· No signup required ‚· Results in 60s</p>
               </form>
             </Reveal>
             <Reveal delay={320}>
@@ -150,7 +156,7 @@ function Landing() {
           <div className="grid gap-4 rounded-3xl border border-border bg-white p-8 shadow-[var(--shadow-card)] sm:grid-cols-2 lg:grid-cols-4">
             {[
               { value: 12400, suffix: "+", label: "Websites analyzed" },
-              { value: 3.2, suffix: "×", label: "Avg. traffic lift", decimals: 1 },
+              { value: 3.2, suffix: "x", label: "Avg. traffic lift", decimals: 1 },
               { value: 60, suffix: "s", label: "Median scan time" },
               { value: 99.9, suffix: "%", label: "Uptime SLA", decimals: 1 },
             ].map((s) => (
@@ -268,9 +274,9 @@ function Landing() {
         </Reveal>
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: Rocket, title: "10× faster audits", body: "Full reports in under a minute versus hours of manual work." },
+            { icon: Rocket, title: "faster audits", body: "Full reports in under a minute versus hours of manual work." },
             { icon: Bot, title: "AI that explains", body: "Every fix comes with the why, not just the what." },
-            { icon: TrendingUp, title: "Measurable results", body: "Teams see 2–4× organic growth within a quarter." },
+            { icon: TrendingUp, title: "Measurable results", body: "Teams see — organic growth within a quarter." },
             { icon: Users, title: "Loved by devs & marketers", body: "Simple enough for founders, deep enough for engineers." },
           ].map(({ icon: Icon, title, body }, i) => (
             <Reveal key={title} delay={i * 60}>
@@ -292,7 +298,7 @@ function Landing() {
           <SectionHeader
             eyebrow="What you get"
             title="Everything in one single-page scan"
-            subtitle="Every number in your report comes straight from the scan — nothing is estimated or invented."
+            subtitle="Every number in your report comes straight from the scan Ã¢â‚¬â€ nothing is estimated or invented."
           />
         </Reveal>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -378,7 +384,7 @@ function Landing() {
         <div className="mt-12 space-y-3">
           {[
             { q: "How long does a scan take?", a: "A single-page scan usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
-            { q: "Do I need to install anything?", a: "No. RankX works with just a URL — no script, no DNS changes, no code." },
+            { q: "Do I need to install anything?", a: "No. RankX works with just a URL Ã¢â‚¬â€ no script, no DNS changes, no code." },
             { q: "Can RankX crawl my whole website?", a: "Not on the free plan. Multi-page crawling and sitemap analysis are part of a paid subscription." },
             { q: "Can I export the report?", a: "Yes. Every report can be downloaded as a text file containing the score, all issues and every AI recommendation." },
             { q: "Where is my report stored?", a: "Your report is kept in your browser session only. Closing the tab clears it, and running a new scan replaces it." },
@@ -448,7 +454,7 @@ function Landing() {
         </div>
         <div className="border-t border-border">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
-            <div>© {new Date().getFullYear()} RankX. All rights reserved.</div>
+            <div>Ã‚© {new Date().getFullYear()} RankX. All rights reserved.</div>
             <div className="flex gap-6">
               <a href="#" className="transition hover:text-foreground">Privacy</a>
               <a href="#" className="transition hover:text-foreground">Terms</a>
@@ -505,7 +511,7 @@ function HeroVisual() {
           <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--warning)]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--success)]" />
-          <span className="ml-3 text-xs text-muted-foreground">acme.com — Overview</span>
+          <span className="ml-3 text-xs text-muted-foreground">acme.com Ã¢â‚¬â€ Overview</span>
         </div>
         <div className="mt-5 space-y-4">
           <div className="flex items-center justify-between">

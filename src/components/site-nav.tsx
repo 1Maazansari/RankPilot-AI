@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/", type: "route" as const },
   { label: "Features", href: "#features", type: "hash" as const },
   { label: "Dashboard", href: "/dashboard", type: "route" as const },
+  { label: "Multi-Page Audit", href: "/multi-page-audit", type: "route" as const },
   { label: "Pricing", href: "/subscription", type: "route" as const },
   { label: "FAQ", href: "#faq", type: "hash" as const },
 ];

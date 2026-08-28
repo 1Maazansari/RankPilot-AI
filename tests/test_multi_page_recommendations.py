@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from backend.ai import llm
 from backend.ai.llm import generate_recommendations
 from backend.ai.models import AIRecommendation, AIRecommendationResult
 from backend.api.recommendations import router as recommendations_router
@@ -107,9 +108,25 @@ def test_llm_failure_uses_existing_safe_fallback(monkeypatch):
 
     result = generate_recommendations("test prompt")
 
-    assert result.recommendations[0].title == "Gemini Error"
-    assert result.recommendations[0].reason == "Gemini request timed out."
+    assert result.recommendations == []
 
+    # 503/UNAVAILABLE is retried once on the primary before using the Flash fallback.
+    response = type("Response", (), {"text": '''{"recommendations": [{"priority": 1, "title": "Add canonicals", "reason": "Search engines need a preferred URL.", "impact": "High", "estimated_effort": "Low", "action": "Add a canonical link.", "source_issue_type": "missing_canonical"}]}'''})()
+    calls = []
+
+    def generate_content(**kwargs):
+        calls.append(kwargs["model"])
+        if len(calls) < 3:
+            raise RuntimeError("503 UNAVAILABLE")
+        return response
+
+    monkeypatch.setattr("backend.ai.llm.client.models.generate_content", generate_content)
+    monkeypatch.setattr("backend.ai.llm.time.sleep", lambda _delay: None)
+
+    result = generate_recommendations("test prompt")
+
+    assert calls == [llm.MODEL, llm.MODEL, llm.FALLBACK_MODEL]
+    assert result.recommendations[0].title == "Add canonicals"
 
 def test_service_persists_one_recommendation_for_a_group(tmp_path, monkeypatch):
     sessions = make_session(tmp_path)
