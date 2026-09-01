@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import {
@@ -22,6 +22,11 @@ import { saveScan } from "@/lib/scan-storage";
 const searchSchema = z.object({ url: z.string().min(1) });
 
 export const Route = createFileRoute("/analyze")({
+  beforeLoad: ({ search }) => {
+    if (!search.url?.trim()) {
+      throw redirect({ to: "/" });
+    }
+  },
   validateSearch: (search) => searchSchema.parse(search),
   head: () => ({
     meta: [

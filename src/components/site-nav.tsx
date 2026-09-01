@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { Zap, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { BackendStatus } from "@/components/backend-status";
@@ -14,8 +14,14 @@ const NAV_ITEMS = [
 
 export function SiteNav() {
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const focusInput = () => {
+    if (location.pathname !== "/") {
+      navigate({ to: "/" });
+      return;
+    }
     document.getElementById("url-input")?.focus();
     document.getElementById("url-input")?.scrollIntoView({ behavior: "smooth", block: "center" });
     setOpen(false);

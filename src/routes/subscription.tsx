@@ -76,8 +76,6 @@ function SubscriptionPage() {
 
               {plan.available ? (
                 <Link to="/" className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110">Start a free scan</Link>
-              ) : plan.id === "pro" ? (
-                <Link to="/multi-page-audit" className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110">Try Multi-Page Audit</Link>
               ) : (
                 <button type="button" disabled aria-disabled="true" title="Coming soon" className="mt-8 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-border bg-secondary px-5 py-3 text-sm font-semibold text-muted-foreground"><Lock className="h-4 w-4" /> {plan.cta}</button>
               )}

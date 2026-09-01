@@ -298,7 +298,7 @@ function Landing() {
           <SectionHeader
             eyebrow="What you get"
             title="Everything in one single-page scan"
-            subtitle="Every number in your report comes straight from the scan Ã¢â‚¬â€ nothing is estimated or invented."
+            subtitle="Every number in your report comes straight from the scan — nothing is estimated or invented."
           />
         </Reveal>
         <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -384,7 +384,7 @@ function Landing() {
         <div className="mt-12 space-y-3">
           {[
             { q: "How long does a scan take?", a: "A single-page scan usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
-            { q: "Do I need to install anything?", a: "No. RankX works with just a URL Ã¢â‚¬â€ no script, no DNS changes, no code." },
+            { q: "Do I need to install anything?", a: "No. RankX works with just a URL — no script, no DNS changes, no code." },
             { q: "Can RankX crawl my whole website?", a: "Not on the free plan. Multi-page crawling and sitemap analysis are part of a paid subscription." },
             { q: "Can I export the report?", a: "Yes. Every report can be downloaded as a text file containing the score, all issues and every AI recommendation." },
             { q: "Where is my report stored?", a: "Your report is kept in your browser session only. Closing the tab clears it, and running a new scan replaces it." },
@@ -454,7 +454,7 @@ function Landing() {
         </div>
         <div className="border-t border-border">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
-            <div>Ã‚© {new Date().getFullYear()} RankX. All rights reserved.</div>
+            <div>© {new Date().getFullYear()} RankX. All rights reserved.</div>
             <div className="flex gap-6">
               <a href="#" className="transition hover:text-foreground">Privacy</a>
               <a href="#" className="transition hover:text-foreground">Terms</a>
@@ -511,7 +511,7 @@ function HeroVisual() {
           <span className="h-2.5 w-2.5 rounded-full bg-destructive/70" />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--warning)]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--success)]" />
-          <span className="ml-3 text-xs text-muted-foreground">acme.com Ã¢â‚¬â€ Overview</span>
+          <span className="ml-3 text-xs text-muted-foreground">acme.com — Overview</span>
         </div>
         <div className="mt-5 space-y-4">
           <div className="flex items-center justify-between">
