@@ -39,3 +39,7 @@ rankpilot.db
 *.db
 node_modules
 
+
+# Build and deployment output
+.output/
+.wrangler/

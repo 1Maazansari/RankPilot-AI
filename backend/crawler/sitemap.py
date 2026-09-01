@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 import requests
 
 from backend.crawler.fetcher import HTMLFetcher
+from backend.scanner.validators import validate_url
 
 
 @dataclass
@@ -21,20 +22,30 @@ def discover_sitemap(
 ) -> SitemapInfo:
     """Check conventional and robots.txt-declared sitemap locations once."""
 
-    candidates = [urljoin(site_url, "/sitemap.xml"), *robots_sitemap_urls]
+    candidates = [
+        urljoin(site_url, "/sitemap.xml"),
+        *robots_sitemap_urls,
+    ]
+
     found_urls = []
 
     for candidate in dict.fromkeys(candidates):
         try:
+            safe_candidate = validate_url(candidate)
+
             response = requests.get(
-                candidate,
+                safe_candidate,
                 headers={"User-Agent": HTMLFetcher.USER_AGENT},
                 timeout=timeout,
             )
-        except requests.RequestException:
+
+        except (requests.RequestException, ValueError):
             continue
 
         if response.status_code == 200:
-            found_urls.append(candidate)
+            found_urls.append(safe_candidate)
 
-    return SitemapInfo(found=bool(found_urls), urls=found_urls)
+    return SitemapInfo(
+        found=bool(found_urls),
+        urls=found_urls,
+    )
