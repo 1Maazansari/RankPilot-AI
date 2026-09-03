@@ -14,9 +14,9 @@ import { PRICING_PLANS } from "@/lib/pricing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "RankX - Instant AI SEO Audits for Any Web Page" },
-      { name: "description", content: "Paste any URL. RankX returns an SEO score, every issue with a fix, metadata and media analysis, and AI recommendations." },
-      { property: "og:title", content: "RankX - Instant AI SEO Audits" },
+      { title: "BrandVizi - Instant AI SEO Audits for Any Web Page" },
+      { name: "description", content: "Paste any URL. BrandVizi returns an SEO score, every issue with a fix, metadata and media analysis, and AI recommendations." },
+      { property: "og:title", content: "BrandVizi - Instant AI SEO Audits" },
       { property: "og:description", content: "AI-powered SEO intelligence in under a minute. Scores, fixes, action plan." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -97,7 +97,7 @@ function Landing() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-                Paste any URL. RankX scans the page, runs a full SEO rule engine, and returns AI recommendations you can act on in minutes.
+                 Paste any URL. BrandVizi scans the page, runs a full SEO rule engine, and returns AI recommendations you can act on in minutes.
               </p>
             </Reveal>
             <Reveal delay={240}>
@@ -270,7 +270,7 @@ function Landing() {
       {/* WHY CHOOSE */}
       <section id="why" className="relative mx-auto max-w-7xl px-6 py-24">
         <Reveal>
-          <SectionHeader eyebrow="Why RankX" title="Built for teams who ship" subtitle="Not another audit tool. A co-pilot that explains what to do next." />
+          <SectionHeader eyebrow="Why BrandVizi" title="Built for teams who ship" subtitle="Not another audit tool. A co-pilot that explains what to do next." />
         </Reveal>
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[
@@ -384,8 +384,8 @@ function Landing() {
         <div className="mt-12 space-y-3">
           {[
             { q: "How long does a scan take?", a: "A single-page scan usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
-            { q: "Do I need to install anything?", a: "No. RankX works with just a URL — no script, no DNS changes, no code." },
-            { q: "Can RankX crawl my whole website?", a: "Not on the free plan. Multi-page crawling and sitemap analysis are part of a paid subscription." },
+            { q: "Do I need to install anything?", a: "No. BrandVizi works with just a URL — no script, no DNS changes, no code." },
+            { q: "Can BrandVizi crawl my whole website?", a: "Not on the free plan. Multi-page crawling and sitemap analysis are part of a paid subscription." },
             { q: "Can I export the report?", a: "Yes. Every report can be downloaded as a text file containing the score, all issues and every AI recommendation." },
             { q: "Where is my report stored?", a: "Your report is kept in your browser session only. Closing the tab clears it, and running a new scan replaces it." },
           ].map((f, i) => (
@@ -424,7 +424,7 @@ function Landing() {
               <div className="grid h-9 w-9 place-items-center rounded-xl bg-[image:var(--gradient-primary)]">
                 <Zap className="h-5 w-5 text-white" strokeWidth={2.5} />
               </div>
-              <span className="text-lg font-bold tracking-tight">Rank<span className="text-primary">X</span></span>
+               <span className="text-lg font-bold tracking-tight">BrandVizi</span>
             </div>
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">
               AI-powered SEO intelligence for modern teams.
@@ -454,7 +454,7 @@ function Landing() {
         </div>
         <div className="border-t border-border">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-muted-foreground sm:flex-row">
-            <div>© {new Date().getFullYear()} RankX. All rights reserved.</div>
+            <div>© {new Date().getFullYear()} BrandVizi. All rights reserved.</div>
             <div className="flex gap-6">
               <a href="#" className="transition hover:text-foreground">Privacy</a>
               <a href="#" className="transition hover:text-foreground">Terms</a>

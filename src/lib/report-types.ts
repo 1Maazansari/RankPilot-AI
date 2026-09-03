@@ -104,7 +104,7 @@ export const ERROR_COPY: Record<AnalyzeErrorCode, { title: string; body: string 
   },
   blocked: {
     title: "The website blocked our crawler",
-    body: "This site rejects automated requests. Allowlist the RankX crawler or try a different page.",
+    body: "This site rejects automated requests. Allowlist the BrandVizi crawler or try a different page.",
   },
   unknown: {
     title: "Something went wrong during the audit",

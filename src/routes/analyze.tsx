@@ -30,16 +30,16 @@ export const Route = createFileRoute("/analyze")({
   validateSearch: (search) => searchSchema.parse(search),
   head: () => ({
     meta: [
-      { title: "Analyzing your website — RankX" },
+      { title: "Analyzing your website — BrandVizi" },
       {
         name: "description",
         content:
-          "RankX is scanning your page, running the SEO rule engine and generating AI recommendations.",
+          "BrandVizi is scanning your page, running the SEO rule engine and generating AI recommendations.",
       },
-      { property: "og:title", content: "Analyzing your website — RankX" },
+      { property: "og:title", content: "Analyzing your website — BrandVizi" },
       {
         property: "og:description",
-        content: "Live progress while RankX audits your page and builds your SEO report.",
+        content: "Live progress while BrandVizi audits your page and builds your SEO report.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -169,7 +169,7 @@ function AnalyzePage() {
             <Zap className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
           <span className="text-lg font-bold tracking-tight">
-            Rank<span className="text-primary">X</span>
+            BrandVizi
           </span>
         </Link>
       </header>

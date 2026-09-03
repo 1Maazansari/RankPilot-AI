@@ -31,7 +31,7 @@ export function SeoIssuesTable({ issues }: { issues: SEOIssue[] }) {
   if (issues.length === 0) {
     return (
       <DashboardSection icon={ListChecks} title="SEO Issues">
-        <EmptyState icon={PartyPopper} title="No SEO issues found!" description="This page passed every rule in the RankX SEO engine." />
+        <EmptyState icon={PartyPopper} title="No SEO issues found!" description="This page passed every rule in the BrandVizi SEO engine." />
       </DashboardSection>
     );
   }

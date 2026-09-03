@@ -53,7 +53,7 @@ export async function analyzeWebsite(rawUrl: string): Promise<AnalyzeResult> {
       signal: AbortSignal.timeout(TIMEOUT_MS),
       headers: {
         "user-agent":
-          "Mozilla/5.0 (compatible; RankXBot/1.0) AppleWebKit/537.36",
+          "Mozilla/5.0 (compatible; BrandViziBot/1.0) AppleWebKit/537.36",
         accept: "text/html,application/xhtml+xml",
       },
     });
@@ -512,7 +512,7 @@ export async function copilotReply(
         messages: [
           {
             role: "system",
-            content: `You are RankX Copilot, an expert SEO assistant inside an SEO audit product. Answer in 2-5 short sentences, concrete and jargon-light. Ground answers in the user's audit data when available.\n\nAUDIT CONTEXT:\n${context || "No audit has been run yet in this session."}`,
+            content: `You are BrandVizi Copilot, an expert SEO assistant inside an SEO audit product. Answer in 2-5 short sentences, concrete and jargon-light. Ground answers in the user's audit data when available.\n\nAUDIT CONTEXT:\n${context || "No audit has been run yet in this session."}`,
           },
           { role: "user", content: question },
         ],

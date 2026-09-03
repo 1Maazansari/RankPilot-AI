@@ -7,16 +7,16 @@ import { MULTI_PAGE_LOCKED_NOTE, PRICING_PLANS } from "@/lib/pricing";
 export const Route = createFileRoute("/subscription")({
   head: () => ({
     meta: [
-      { title: "Plans & Multi-Page Crawling — RankX" },
+      { title: "Plans & Multi-Page Crawling — BrandVizi" },
       {
         name: "description",
         content:
-          "Single-page scans are free on RankX. Multi-page website crawling, sitemap analysis and full-site reports require a subscription.",
+          "Single-page scans are free on BrandVizi. Multi-page website crawling, sitemap analysis and full-site reports require a subscription.",
       },
-      { property: "og:title", content: "Plans & Multi-Page Crawling — RankX" },
+      { property: "og:title", content: "Plans & Multi-Page Crawling — BrandVizi" },
       {
         property: "og:description",
-        content: "Compare RankX plans and unlock full-website crawling.",
+        content: "Compare BrandVizi plans and unlock full-website crawling.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

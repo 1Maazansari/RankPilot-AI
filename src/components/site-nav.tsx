@@ -35,7 +35,7 @@ export function SiteNav() {
             <Zap className="h-5 w-5 text-white" strokeWidth={2.5} />
           </div>
           <span className="text-lg font-bold tracking-tight text-foreground">
-            Rank<span className="text-primary">X</span>
+            BrandVizi
           </span>
         </Link>
 

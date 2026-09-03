@@ -20,7 +20,7 @@ export function AIChatPanel({ context = "" }: { context?: string }) {
     {
       role: "assistant",
       content:
-        "Hi — I'm the RankX AI copilot. Ask me anything about your SEO report, or pick a prompt below.",
+        "Hi — I'm the BrandVizi AI copilot. Ask me anything about your SEO report, or pick a prompt below.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -79,7 +79,7 @@ export function AIChatPanel({ context = "" }: { context?: string }) {
                 <Bot className="h-4 w-4" />
               </div>
               <div>
-                <div className="text-sm font-semibold">RankX Copilot</div>
+                <div className="text-sm font-semibold">BrandVizi Copilot</div>
                 <div className="text-[11px] text-white/80">Online · AI powered</div>
               </div>
             </div>

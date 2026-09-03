@@ -20,16 +20,16 @@ import type { StoredScan } from "@/types/scan";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "SEO Report Dashboard — RankX" },
+      { title: "SEO Report Dashboard — BrandVizi" },
       {
         name: "description",
         content:
-          "Your RankX SEO report: score, issues by severity, metadata, media and AI recommendations for the page you scanned.",
+          "Your BrandVizi SEO report: score, issues by severity, metadata, media and AI recommendations for the page you scanned.",
       },
-      { property: "og:title", content: "SEO Report Dashboard — RankX" },
+      { property: "og:title", content: "SEO Report Dashboard — BrandVizi" },
       {
         property: "og:description",
-        content: "Score, issues, metadata and AI recommendations from your RankX scan.",
+        content: "Score, issues, metadata and AI recommendations from your BrandVizi scan.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -20,7 +20,7 @@ export class ApiError extends Error {
   }
 }
 
-/** Maps an HTTP status from the RankX API to a user-safe error. */
+/** Maps an HTTP status from the BrandVizi API to a user-safe error. */
 export function apiErrorFromStatus(status: number, detail?: string): ApiError {
   switch (status) {
     case 400:
@@ -49,7 +49,7 @@ export function apiErrorFromStatus(status: number, detail?: string): ApiError {
       return new ApiError(
         "server",
         "Server error",
-        detail || "The RankX server couldn't complete this scan. Please try again.",
+        detail || "The BrandVizi server couldn't complete this scan. Please try again.",
         status,
       );
   }
@@ -58,8 +58,8 @@ export function apiErrorFromStatus(status: number, detail?: string): ApiError {
 export const NETWORK_ERROR = () =>
   new ApiError(
     "network",
-    "Can't reach the RankX server",
-    "Cannot connect to the RankX AI server. Please make sure the backend is running and VITE_API_BASE_URL is correct.",
+    "Can't reach the BrandVizi server",
+    "Cannot connect to the BrandVizi AI server. Please make sure the backend is running and VITE_API_BASE_URL is correct.",
   );
 
 export const MALFORMED_ERROR = () =>

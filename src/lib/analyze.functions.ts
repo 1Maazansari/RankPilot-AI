@@ -25,7 +25,7 @@ export const analyzeSite = createServerFn({ method: "POST" })
     if (local.ok) {
       local.report.aiNotice =
         local.report.aiNotice ??
-        "The RankX API (POST /scan) is not reachable from this environment — this report was produced by the built-in crawler. Set RANKX_API_URL to your running backend to use it.";
+        "The BrandVizi API (POST /scan) is not reachable from this environment — this report was produced by the built-in crawler. Set RANKX_API_URL to your running backend to use it.";
     }
     return local;
   });

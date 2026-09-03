@@ -1,5 +1,5 @@
 /**
- * Type mirror of the RankX FastAPI backend contract.
+ * Type mirror of the BrandVizi FastAPI backend contract.
  * Field names match the backend JSON exactly. Do not rename.
  */
 

@@ -17,7 +17,7 @@ export const PRICING_PLANS: PricingPlan[] = [
     name: "Free — Single Page",
     price: "$0",
     period: "/mo",
-    tagline: "Audit any single URL with the full RankX engine.",
+    tagline: "Audit any single URL with the full BrandVizi engine.",
     features: [
       "Single URL SEO scan",
       "SEO score & grade",

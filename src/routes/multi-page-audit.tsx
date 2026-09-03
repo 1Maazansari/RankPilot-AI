@@ -10,7 +10,7 @@ import { toApiError, type ApiError } from "@/lib/api-error";
 import { validateWebsiteUrl } from "@/lib/url-validation";
 
 export const Route = createFileRoute("/multi-page-audit")({
-  head: () => ({ meta: [{ title: "Multi-Page Site Audit — RankX" }, { name: "description", content: "Analyze multiple pages of your website and identify SEO issues across the site." }, { name: "robots", content: "noindex" }] }),
+   head: () => ({ meta: [{ title: "Multi-Page Site Audit — BrandVizi" }, { name: "description", content: "Analyze multiple pages of your website and identify SEO issues across the site." }, { name: "robots", content: "noindex" }] }),
   component: MultiPageAuditPage,
 });
 
