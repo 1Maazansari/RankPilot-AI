@@ -1,354 +1,96 @@
-# 🚀 RankPilot AI
+````markdown
+# BrandVizi 🚀
 
-> **AI-Powered SEO Website Auditor & Optimization Assistant**
+### AI-Powered SEO & AEO Intelligence Platform
 
-RankPilot AI is an intelligent SEO auditing platform that analyzes websites, detects technical and on-page SEO issues, calculates an SEO score, and generates AI-powered recommendations to improve search engine visibility.
+BrandVizi helps businesses, founders, marketers, and agencies understand and improve their website visibility.
 
-Built with **FastAPI**, **Streamlit**, and **Google Gemini**, RankPilot AI combines rule-based SEO analysis with generative AI to deliver actionable insights in seconds.
+It analyzes websites, identifies SEO issues, calculates an SEO score, and provides actionable AI-powered recommendations.
 
----
+> **AI • SEO • AEO INTELLIGENCE**  
+> **Rank Higher • Be Found Everywhere**
 
 ## ✨ Features
 
-### 🔍 Website Analysis
-- Website crawling
-- Metadata extraction
-- Heading structure analysis
-- Image SEO analysis
-- Internal & external link analysis
-- Technical SEO checks
-- Robots.txt detection
-- Sitemap.xml detection
+- 🔍 **SEO Website Audit** — Analyze technical and on-page SEO.
+- 📊 **SEO Score** — Understand overall website health.
+- 🤖 **AI Recommendations** — Get clear, actionable improvement suggestions.
+- 💬 **AI SEO Copilot** — Understand audit results with AI assistance.
+- 🌐 **Multi-Page Audit** — Analyze SEO across multiple website pages.
+- 📄 **SEO Reports** — Review and understand audit results.
 
-### 📊 SEO Dashboard
-- Overall SEO Score
-- Grade Calculation
-- Issue Severity Breakdown
-- Interactive Analytics Charts
-- Website Statistics
-- Metadata Overview
+## 🧠 SEO + AEO
 
-### 🤖 AI Recommendations
-- Personalized SEO recommendations
-- Priority-based improvements
-- Estimated implementation effort
-- SEO impact analysis
-- Actionable optimization suggestions
+BrandVizi combines traditional **SEO** with **AEO (Answer Engine Optimization)** to help websites become more discoverable across:
 
-### ⚡ Technical SEO
-- Title Tag Analysis
-- Meta Description Analysis
-- Canonical URL Validation
-- Heading Hierarchy
-- Image Alt Text Detection
-- Link Analysis
-- Robots.txt Validation
-- Sitemap Detection
+- Search Engines
+- AI Search
+- Answer Engines
+- Generative AI
 
----
+## 🏗️ Tech Stack
 
-## 📸 Screenshots
+**Frontend:** React, TypeScript, TanStack Start, Vite  
+**Backend:** Python, FastAPI  
+**Database:** SQLite  
+**AI:** Google Gemini
 
-### Dashboard
+## 🚀 Getting Started
 
-> Add a screenshot here
+### Clone
 
-```
-docs/dashboard.png
-```
-
-### AI Recommendations
-
-> Add a screenshot here
-
-```
-docs/recommendations.png
-```
-
-### SEO Issues
-
-> Add a screenshot here
-
-```
-docs/issues.png
-```
-
----
-
-## 🏗️ Architecture
-
-```text
-                User
-                  │
-                  ▼
-        Streamlit Dashboard
-                  │
-                  ▼
-           FastAPI Backend
-                  │
-      ┌───────────┴───────────┐
-      ▼                       ▼
- Website Scanner        SEO Rule Engine
-      │                       │
-      └───────────┬───────────┘
-                  ▼
-           Google Gemini AI
-                  │
-                  ▼
-        AI SEO Recommendations
-```
-
----
-
-## 🛠️ Tech Stack
+```bash
+git clone https://github.com/1Maazansari/RankPilot-AI.git
+cd RankPilot-AI
+````
 
 ### Frontend
-- Streamlit
+
+```bash
+npm install
+npm run dev
+```
 
 ### Backend
-- FastAPI
-- Uvicorn
 
-### AI
-- Google Gemini
-
-### Web Scraping
-- BeautifulSoup4
-- Requests
-- lxml
-
-### Data Processing
-- Pandas
-
-### Visualization
-- Plotly
-
-### Language
-- Python 3.11+
-
----
-
-## 📁 Project Structure
-
-```text
-RankPilot-AI/
-
-├── backend/
-│   ├── api/
-│   ├── scanner/
-│   ├── seo/
-│   ├── ai/
-│   └── app.py
-│
-├── frontend/
-│   ├── components/
-│   ├── services/
-│   ├── styles/
-│   └── streamlit_app.py
-│
-├── requirements.txt
-└── README.md
-```
-
----
-
-## ⚙️ Installation
-
-### Clone Repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/RankPilot-AI.git
-
-cd RankPilot-AI
-```
-
-### Create Virtual Environment
-
-```bash
+```powershell
 python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r backend/requirements.txt
+uvicorn backend.app:app --reload --host 127.0.0.1 --port 8000
 ```
 
-Windows
 
-```bash
-.venv\Scripts\activate
-```
 
-Linux / Mac
 
-```bash
-source .venv/bin/activate
-```
+## 🛡️ Security
 
-### Install Dependencies
+BrandVizi includes URL validation and SSRF protection to prevent scanning of localhost, private, and internal network addresses.
 
-```bash
-pip install -r requirements.txt
-```
+## 🗺️ Roadmap
 
-### Configure Environment Variables
+* 🔧 AI Auto-Fix
+* 🤖 Advanced SEO/AEO agents
+* 📊 Advanced SEO/AEO/GEO analytics
+* 🔄 Continuous website monitoring
+* 🧩 VS Code integration
+* 🚀 Automated optimization
 
-Create a `.env` file
+> Roadmap features are planned and may not be available yet.
 
-```env
-GEMINI_API_KEY=YOUR_API_KEY
-```
+## 💡 Vision
+
+> **Don't just tell users what's wrong. Tell them what to do next.**
+
+BrandVizi aims to help businesses become visible across traditional search and the rapidly evolving AI-powered search ecosystem.
 
 ---
 
-## ▶️ Running the Project
+### ⭐ BrandVizi
 
-### Start FastAPI
+**AI • SEO • AEO INTELLIGENCE**
 
-```bash
-uvicorn app:app --reload
-```
-
-Backend
+**Rank Higher • Be Found Everywhere**
 
 ```
-http://127.0.0.1:8000
 ```
-
----
-
-### Start Streamlit
-
-```bash
-streamlit run frontend/streamlit_app.py
-```
-
-Frontend
-
-```
-http://localhost:8501
-```
-
----
-
-## 📡 API Endpoints
-
-### Health Check
-
-```
-GET /
-```
-
-Response
-
-```json
-{
-    "status": "running"
-}
-```
-
----
-
-### Analyze Website
-
-```
-POST /scan
-```
-
-Request
-
-```json
-{
-    "url":"https://example.com"
-}
-```
-
-Response
-
-```json
-{
-    "scan": {},
-    "seo": {},
-    "ai": {}
-}
-```
-
----
-
-## 📊 Workflow
-
-```text
-Enter Website URL
-        │
-        ▼
-Website Scanner
-        │
-        ▼
-SEO Rule Engine
-        │
-        ▼
-Score Calculation
-        │
-        ▼
-Gemini AI Analysis
-        │
-        ▼
-Dashboard Visualization
-```
-
----
-
-## 🚀 Future Roadmap
-
-### ✅ Version 1 (Completed)
-
-- Website Scanner
-- SEO Analysis
-- Technical SEO
-- Dashboard
-- AI Recommendations
-- SEO Score
-- Charts
-- Issue Detection
-
-### 🔄 Version 2
-
-- PDF SEO Reports
-- Scan History
-- Website Comparison
-- Multi-page Crawling
-- AI SEO Chat Assistant
-- Export Reports
-- Scheduled Website Monitoring
-
-### 🤖 Version 3
-
-- SEO Planner Agent
-- Technical SEO Agent
-- Content Optimization Agent
-- Auto Fix Suggestions
-- WordPress Integration
-- Shopify Integration
-- Team Dashboard
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-Feel free to fork the repository, open issues, or submit pull requests to improve RankPilot AI.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
----
-
-## 👨‍💻 Author
-
-**Maaz Ansari**
-
-- GitHub: https://github.com/1Maazansari
-- LinkedIn: https://linkedin.com/in/maazansari-ml
-
----
-
-⭐ If you found this project useful, consider giving it a star!
