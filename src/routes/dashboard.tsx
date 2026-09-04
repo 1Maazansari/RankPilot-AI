@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Download, ExternalLink, Lock, RefreshCw, Search, Sparkles } from "lucide-react";
+import { Download, ExternalLink, Globe, Lock, RefreshCw, Search, Sparkles } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { AIChatPanel } from "@/components/ai-chat-panel";
 import { EmptyState } from "@/components/dashboard/empty-state";
