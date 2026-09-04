@@ -14,12 +14,29 @@ import { PRICING_PLANS } from "@/lib/pricing";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "BrandVizi - Instant AI SEO Audits for Any Web Page" },
-      { name: "description", content: "Paste any URL. BrandVizi returns an SEO score, every issue with a fix, metadata and media analysis, and AI recommendations." },
-      { property: "og:title", content: "BrandVizi - Instant AI SEO Audits" },
-      { property: "og:description", content: "AI-powered SEO intelligence in under a minute. Scores, fixes, action plan." },
+      { title: "Free SEO & AEO Tool | AI Website Audit | BrandVizi" },
+      {
+        name: "description",
+        content:
+          "BrandVizi is a free AI-powered SEO and AEO tool that audits your website, finds SEO issues, scores your site, and provides actionable recommendations.",
+      },
+      { property: "og:title", content: "Free SEO & AEO Tool | BrandVizi" },
+      {
+        property: "og:description",
+        content: "Free AI-powered SEO and AEO website auditing with actionable recommendations.",
+      },
+      { property: "og:url", content: "https://brandvizi.in/" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Free SEO & AEO Tool | BrandVizi" },
+      {
+        name: "twitter:description",
+        content: "Free AI-powered SEO and AEO website auditing with actionable recommendations.",
+      },
+      { name: "twitter:image", content: "/og-image.png" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://brandvizi.in/" },
     ],
   }),
   component: Landing,
@@ -90,14 +107,12 @@ function Landing() {
             </Reveal>
             <Reveal delay={80}>
               <h1 className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                Rank higher with an{" "}
-                <span className="bg-[image:var(--gradient-primary)] bg-clip-text text-transparent">AI co-pilot</span>{" "}
-                for your website
+                Free SEO &amp; AEO Tool for Your Website
               </h1>
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-                 Paste any URL. BrandVizi scans the page, runs a full SEO rule engine, and returns AI recommendations you can act on in minutes.
+                Paste any URL to audit your website. BrandVizi identifies SEO issues, scores your site, and delivers AI-powered recommendations for SEO and AEO. Free during early access — no signup required.
               </p>
             </Reveal>
             <Reveal delay={240}>
