@@ -34,6 +34,38 @@ export const Route = createFileRoute("/")({
         content: "Free AI-powered SEO and AEO website auditing with actionable recommendations.",
       },
       { name: "twitter:image", content: "/og-image.png" },
+      {
+        "script:ld+json": {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: "BrandVizi",
+              url: "https://brandvizi.in/",
+            },
+            {
+              "@type": "WebSite",
+              name: "BrandVizi",
+              url: "https://brandvizi.in/",
+              description:
+                "BrandVizi is a free AI-powered SEO and AEO website audit tool that audits your website, finds SEO issues, scores your site, and provides actionable recommendations.",
+            },
+            {
+              "@type": "SoftwareApplication",
+              name: "BrandVizi",
+              url: "https://brandvizi.in/",
+              applicationCategory: "BusinessApplication",
+              operatingSystem: "Web",
+              offers: {
+                "@type": "Offer",
+                price: "0",
+              },
+              description:
+                "BrandVizi is a free AI-powered SEO and AEO website audit tool that audits your website, finds SEO issues, scores your site, and provides actionable recommendations.",
+            },
+          ],
+        },
+      },
     ],
     links: [
       { rel: "canonical", href: "https://brandvizi.in/" },
