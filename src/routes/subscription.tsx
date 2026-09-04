@@ -1,22 +1,22 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, Lock, Sparkles } from "lucide-react";
+import { Check, Rocket } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { AIChatPanel } from "@/components/ai-chat-panel";
-import { MULTI_PAGE_LOCKED_NOTE, PRICING_PLANS } from "@/lib/pricing";
+import { PRICING_PLANS } from "@/lib/pricing";
 
 export const Route = createFileRoute("/subscription")({
   head: () => ({
     meta: [
-      { title: "Plans & Multi-Page Crawling — BrandVizi" },
+      { title: "Early Access — BrandVizi" },
       {
         name: "description",
         content:
-          "Single-page scans are free on BrandVizi. Multi-page website crawling, sitemap analysis and full-site reports require a subscription.",
+          "Everything is free during early access. Get all current BrandVizi features — no signup, no credit card, no paid plan.",
       },
-      { property: "og:title", content: "Plans & Multi-Page Crawling — BrandVizi" },
+      { property: "og:title", content: "Early Access — BrandVizi" },
       {
         property: "og:description",
-        content: "Compare BrandVizi plans and unlock full-website crawling.",
+        content: "All current BrandVizi features are free during early access.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -33,30 +33,27 @@ function SubscriptionPage() {
       <main className="mx-auto max-w-7xl px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-2xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
-            <Sparkles className="h-3.5 w-3.5" /> Plans
+            <Rocket className="h-3.5 w-3.5" /> Early Access
           </div>
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Scan one page free. Crawl the whole site on Pro.
+            Everything is Free During Early Access 🚀
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">{MULTI_PAGE_LOCKED_NOTE}</p>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Get access to all current BrandVizi features — no signup, no credit card, no paid plan.
+          </p>
         </div>
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 lg:grid-cols-1 max-w-2xl mx-auto">
           {PRICING_PLANS.map((plan) => (
             <article
               key={plan.id}
-              className={`flex flex-col rounded-3xl border bg-white p-6 shadow-[var(--shadow-card)] sm:p-8 ${
-                plan.highlight ? "border-primary ring-2 ring-primary/15" : "border-border"
-              }`}
+              className={`flex flex-col rounded-3xl border bg-white p-8 shadow-[var(--shadow-glow)] ring-2 ring-primary/15 sm:p-10`}
             >
-              {plan.highlight && (
-                <span className="mb-4 w-fit rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
-                  Most popular
-                </span>
-              )}
-              <h2 className="text-lg font-bold tracking-tight text-foreground">{plan.name}</h2>
+              <span className="mb-4 w-fit rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
+                {plan.name}
+              </span>
               <div className="mt-3 flex items-baseline gap-1">
-                <span className="text-4xl font-extrabold tracking-tight text-foreground">
+                <span className="text-5xl font-extrabold tracking-tight text-foreground">
                   {plan.price}
                 </span>
                 {plan.period && (
@@ -65,7 +62,7 @@ function SubscriptionPage() {
               </div>
               <p className="mt-3 text-sm text-muted-foreground">{plan.tagline}</p>
 
-              <ul className="mt-6 flex-1 space-y-3">
+              <ul className="mt-8 flex-1 grid gap-3 sm:grid-cols-2">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5 text-sm text-foreground">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -74,18 +71,18 @@ function SubscriptionPage() {
                 ))}
               </ul>
 
-              {plan.available ? (
-                <Link to="/" className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110">Start a free scan</Link>
-              ) : (
-                <button type="button" disabled aria-disabled="true" title="Coming soon" className="mt-8 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-xl border border-border bg-secondary px-5 py-3 text-sm font-semibold text-muted-foreground"><Lock className="h-4 w-4" /> {plan.cta}</button>
-              )}
+              <Link
+                to="/"
+                className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110"
+              >
+                {plan.cta}
+              </Link>
             </article>
           ))}
         </div>
 
         <p className="mt-10 text-center text-sm text-muted-foreground">
-          Multi-page crawling is not enabled in this deployment. Single-page scanning remains fully
-          available and free.
+          No account required. No payment needed. Just paste a URL and start your free audit.
         </p>
       </main>
 

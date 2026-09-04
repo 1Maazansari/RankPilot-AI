@@ -14,7 +14,7 @@ import { SeoIssuesTable } from "@/components/dashboard/seo-issues-table";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
 import { readScan } from "@/lib/scan-storage";
 import { downloadReport } from "@/lib/report-download";
-import { MULTI_PAGE_LOCKED_NOTE } from "@/lib/pricing";
+
 import type { StoredScan } from "@/types/scan";
 
 export const Route = createFileRoute("/dashboard")({
@@ -152,13 +152,15 @@ function DashboardPage() {
         <section className="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-primary/20 bg-accent/50 p-6 sm:p-8">
           <div className="flex items-start gap-3">
             <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-primary shadow-sm">
-              <Lock className="h-5 w-5" />
+              <Globe className="h-5 w-5" />
             </span>
             <div>
               <h2 className="text-lg font-bold tracking-tight text-foreground">
-                Want the whole website?
+                Multi-Page Site Audit
               </h2>
-              <p className="mt-1 max-w-xl text-sm text-muted-foreground">{MULTI_PAGE_LOCKED_NOTE}</p>
+              <p className="mt-1 max-w-xl text-sm text-muted-foreground">
+                Crawl your entire website and identify SEO issues across all pages. Free during early access.
+              </p>
             </div>
           </div>
           <Link

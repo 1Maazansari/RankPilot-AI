@@ -327,14 +327,14 @@ function Landing() {
       <section id="pricing" className="relative mx-auto max-w-7xl px-6 py-24">
         <Reveal>
           <SectionHeader
-            eyebrow="Pricing"
-            title="Single-page scans are free"
-            subtitle="Multi-page website crawling requires a subscription."
+            eyebrow="Early Access"
+            title="Everything is Free During Early Access 🚀"
+            subtitle="Get access to all current BrandVizi features — no signup, no credit card, no paid plan."
           />
         </Reveal>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {PRICING_PLANS.map((plan, i) => (
-            <Reveal key={plan.id} delay={i * 80}>
+        <div className="mt-14 grid gap-6 md:grid-cols-1 max-w-2xl mx-auto">
+          {PRICING_PLANS.map((plan) => (
+            <Reveal key={plan.id}>
               <div
                 className={`relative flex h-full flex-col rounded-3xl border p-8 transition hover:-translate-y-1 ${
                   plan.highlight
@@ -342,18 +342,13 @@ function Landing() {
                     : "border-border bg-white shadow-[var(--shadow-card)]"
                 }`}
               >
-                {plan.highlight && (
-                  <span className="absolute right-6 top-6 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">
-                    Most popular
-                  </span>
-                )}
                 <div className="text-sm font-semibold text-primary">{plan.name}</div>
                 <div className="mt-3 flex items-baseline gap-1">
                   <span className="text-5xl font-extrabold tracking-tight">{plan.price}</span>
                   {plan.period && <span className="text-sm text-muted-foreground">{plan.period}</span>}
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground">{plan.tagline}</p>
-                <ul className="mt-6 flex-1 space-y-3 text-sm">
+                <ul className="mt-6 flex-1 grid gap-3 sm:grid-cols-2 text-sm">
                   {plan.features.map((feature) => (
                     <li key={feature} className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {feature}
@@ -361,14 +356,14 @@ function Landing() {
                   ))}
                 </ul>
                 <Link
-                  to="/subscription"
+                  to="/"
                   className={`mt-8 w-full rounded-xl px-4 py-3 text-center text-sm font-semibold transition ${
                     plan.highlight
                       ? "bg-[image:var(--gradient-primary)] text-white hover:brightness-110"
                       : "bg-foreground text-white hover:opacity-90"
                   }`}
                 >
-                  {plan.available ? "Scan a page free" : plan.cta}
+                  {plan.cta}
                 </Link>
               </div>
             </Reveal>
@@ -385,7 +380,7 @@ function Landing() {
           {[
             { q: "How long does a scan take?", a: "A single-page scan usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
             { q: "Do I need to install anything?", a: "No. BrandVizi works with just a URL — no script, no DNS changes, no code." },
-            { q: "Can BrandVizi crawl my whole website?", a: "Not on the free plan. Multi-page crawling and sitemap analysis are part of a paid subscription." },
+            { q: "Can BrandVizi crawl my whole website?", a: "Yes. Multi-page crawling and sitemap analysis are available now during early access — no subscription required." },
             { q: "Can I export the report?", a: "Yes. Every report can be downloaded as a text file containing the score, all issues and every AI recommendation." },
             { q: "Where is my report stored?", a: "Your report is kept in your browser session only. Closing the tab clears it, and running a new scan replaces it." },
           ].map((f, i) => (
