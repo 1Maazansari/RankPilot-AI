@@ -181,11 +181,11 @@ function Landing() {
             </Reveal>
             <Reveal delay={320}>
               <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-widest text-muted-foreground/80">
-                <span>Trusted by 12k+ teams</span>
+                <span>Free during early access</span>
                 <span className="h-1 w-1 rounded-full bg-muted-foreground/30" />
-                <span>SOC2 grade</span>
+                <span>No signup required</span>
                 <span className="h-1 w-1 rounded-full bg-muted-foreground/30" />
-                <span>GPT-4 powered</span>
+                <span>AI-powered SEO & AEO analysis</span>
               </div>
             </Reveal>
           </div>
@@ -204,8 +204,8 @@ function Landing() {
             {[
               { value: 12400, suffix: "+", label: "Websites analyzed" },
               { value: 3.2, suffix: "x", label: "Avg. traffic lift", decimals: 1 },
-              { value: 60, suffix: "s", label: "Median scan time" },
-              { value: 99.9, suffix: "%", label: "Uptime SLA", decimals: 1 },
+               { value: 60, suffix: "s", label: "Median scan time" },
+               { value: "Multi-page", suffix: "", label: "Audit scope" },
             ].map((s) => (
               <div key={s.label} className="text-center sm:text-left">
                 <div className="bg-[image:var(--gradient-primary)] bg-clip-text text-4xl font-extrabold tracking-tight text-transparent sm:text-5xl">
@@ -323,7 +323,7 @@ function Landing() {
           {[
             { icon: Rocket, title: "faster audits", body: "Full reports in under a minute versus hours of manual work." },
             { icon: Bot, title: "AI that explains", body: "Every fix comes with the why, not just the what." },
-            { icon: TrendingUp, title: "Measurable results", body: "Teams see — organic growth within a quarter." },
+             { icon: TrendingUp, title: "Measurable results", body: "Single-page & multi-page audits" },
             { icon: Users, title: "Loved by devs & marketers", body: "Simple enough for founders, deep enough for engineers." },
           ].map(({ icon: Icon, title, body }, i) => (
             <Reveal key={title} delay={i * 60}>
