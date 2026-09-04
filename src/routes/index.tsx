@@ -144,7 +144,7 @@ function Landing() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-6 max-w-xl text-lg text-muted-foreground">
-                Paste any URL to audit your website. BrandVizi identifies SEO issues, scores your site, and delivers AI-powered recommendations for SEO and AEO. Free during early access — no signup required.
+                Paste any URL to audit your website. BrandVizi is a free AI-powered SEO and AEO website audit tool. It runs a complete website SEO analysis, acts as an AI SEO checker, identifies SEO issues, scores your site, and delivers actionable recommendations for SEO and AEO. Free during early access — no signup required.
               </p>
             </Reveal>
             <Reveal delay={240}>
@@ -221,7 +221,7 @@ function Landing() {
       {/* FEATURES */}
       <section id="features" className="relative mx-auto max-w-7xl px-6 py-24">
         <Reveal>
-          <SectionHeader eyebrow="Features" title="Everything you need to outrank the competition" subtitle="A complete AI SEO workflow, from scan to shipped fix." />
+          <SectionHeader eyebrow="Features" title="Everything you need to outrank the competition" subtitle="A complete SEO audit and AEO workflow — from scan to shipped fix." />
         </Reveal>
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[
@@ -425,9 +425,10 @@ function Landing() {
         </Reveal>
         <div className="mt-12 space-y-3">
           {[
-            { q: "How long does a scan take?", a: "A single-page scan usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
-            { q: "Do I need to install anything?", a: "No. BrandVizi works with just a URL — no script, no DNS changes, no code." },
-            { q: "Can BrandVizi crawl my whole website?", a: "Yes. Multi-page crawling and sitemap analysis are available now during early access — no subscription required." },
+            { q: "How long does a scan take?", a: "A single-page website SEO analysis usually completes in a few seconds. Very slow sites can take up to two minutes before the request times out." },
+            { q: "Do I need to install anything?", a: "No. BrandVizi is a free AI-powered SEO and AEO website audit tool that works with just a URL — no script, no DNS changes, no code." },
+            { q: "Can BrandVizi crawl my whole website?", a: "Yes. Multi-page crawling and sitemap analysis are available now during early access. You can run a full SEO audit across multiple pages — no subscription required." },
+            { q: "What is AEO?", a: "AEO stands for Answer Engine Optimization. BrandVizi helps you understand and improve your website for both traditional search engines and AI-powered answer engines, so you can improve your content for the way people search today.." },
             { q: "Can I export the report?", a: "Yes. Every report can be downloaded as a text file containing the score, all issues and every AI recommendation." },
             { q: "Where is my report stored?", a: "Your report is kept in your browser session only. Closing the tab clears it, and running a new scan replaces it." },
           ].map((f, i) => (
