@@ -34,7 +34,7 @@ export function SiteNav() {
           <img
             src="/brandvizi-logo.png"
             alt="BrandVizi — AI SEO AEO Intelligence"
-            className="h-8 w-auto object-contain sm:h-9"
+            className="h-auto w-[130px] object-contain sm:w-[150px] lg:w-[170px]"
           />
         </Link>
 
