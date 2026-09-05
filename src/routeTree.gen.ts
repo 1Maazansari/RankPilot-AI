@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalyzeRouteImport } from './routes/analyze'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FreeSeoCheckerRouteImport } from './routes/free-seo-checker'
 import { Route as MultiPageAuditRouteImport } from './routes/multi-page-audit'
 import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as ApiPublicHealthRouteImport } from './routes/api/public/health'
@@ -29,6 +30,11 @@ const AnalyzeRoute = AnalyzeRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FreeSeoCheckerRoute = FreeSeoCheckerRouteImport.update({
+  id: '/free-seo-checker',
+  path: '/free-seo-checker',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MultiPageAuditRoute = MultiPageAuditRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/free-seo-checker': typeof FreeSeoCheckerRoute
   '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/free-seo-checker': typeof FreeSeoCheckerRoute
   '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/analyze': typeof AnalyzeRoute
   '/dashboard': typeof DashboardRoute
+  '/free-seo-checker': typeof FreeSeoCheckerRoute
   '/multi-page-audit': typeof MultiPageAuditRoute
   '/subscription': typeof SubscriptionRoute
   '/api/public/health': typeof ApiPublicHealthRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analyze'
     | '/dashboard'
+    | '/free-seo-checker'
     | '/multi-page-audit'
     | '/subscription'
     | '/api/public/health'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analyze'
     | '/dashboard'
+    | '/free-seo-checker'
     | '/multi-page-audit'
     | '/subscription'
     | '/api/public/health'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/analyze'
     | '/dashboard'
+    | '/free-seo-checker'
     | '/multi-page-audit'
     | '/subscription'
     | '/api/public/health'
@@ -103,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalyzeRoute: typeof AnalyzeRoute
   DashboardRoute: typeof DashboardRoute
+  FreeSeoCheckerRoute: typeof FreeSeoCheckerRoute
   MultiPageAuditRoute: typeof MultiPageAuditRoute
   SubscriptionRoute: typeof SubscriptionRoute
   ApiPublicHealthRoute: typeof ApiPublicHealthRoute
@@ -129,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/free-seo-checker': {
+      id: '/free-seo-checker'
+      path: '/free-seo-checker'
+      fullPath: '/free-seo-checker'
+      preLoaderRoute: typeof FreeSeoCheckerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/multi-page-audit': {
@@ -159,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalyzeRoute: AnalyzeRoute,
   DashboardRoute: DashboardRoute,
+  FreeSeoCheckerRoute: FreeSeoCheckerRoute,
   MultiPageAuditRoute: MultiPageAuditRoute,
   SubscriptionRoute: SubscriptionRoute,
   ApiPublicHealthRoute: ApiPublicHealthRoute,
