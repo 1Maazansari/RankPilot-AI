@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { Zap, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { BackendStatus } from "@/components/backend-status";
 
@@ -30,13 +30,12 @@ export function SiteNav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 bg-white/75 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-[image:var(--gradient-primary)] shadow-[var(--shadow-glow)]">
-            <Zap className="h-5 w-5 text-white" strokeWidth={2.5} />
-          </div>
-          <span className="text-lg font-bold tracking-tight text-foreground">
-            BrandVizi
-          </span>
+        <Link to="/" className="flex items-center">
+          <img
+            src="/brandvizi-logo.png"
+            alt="BrandVizi — AI SEO AEO Intelligence"
+            className="h-8 w-auto object-contain sm:h-9"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 lg:flex">

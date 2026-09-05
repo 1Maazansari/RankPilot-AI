@@ -12,7 +12,6 @@ import {
   RotateCw,
   Search,
   ShieldCheck,
-  Zap,
 } from "lucide-react";
 import { AIChatPanel } from "@/components/ai-chat-panel";
 import { scanWebsite } from "@/lib/api";
@@ -164,13 +163,12 @@ function AnalyzePage() {
   return (
     <div className="relative min-h-screen">
       <header className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="grid h-9 w-9 place-items-center rounded-xl bg-[image:var(--gradient-primary)] shadow-[var(--shadow-glow)]">
-            <Zap className="h-5 w-5 text-white" strokeWidth={2.5} />
-          </div>
-          <span className="text-lg font-bold tracking-tight">
-            BrandVizi
-          </span>
+        <Link to="/" className="flex items-center">
+          <img
+            src="/brandvizi-logo.png"
+            alt="BrandVizi — AI SEO AEO Intelligence"
+            className="h-8 w-auto object-contain sm:h-9"
+          />
         </Link>
       </header>
 
