@@ -73,7 +73,7 @@ export function SiteNav() {
 
         <button
           onClick={() => setOpen((v) => !v)}
-          className="rounded-lg p-2 text-foreground lg:hidden"
+          className="rounded-lg p-3 text-foreground lg:hidden flex items-center justify-center"
           aria-label="Toggle menu"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}

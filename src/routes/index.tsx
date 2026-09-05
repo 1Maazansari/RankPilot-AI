@@ -148,36 +148,42 @@ function Landing() {
               </p>
             </Reveal>
             <Reveal delay={240}>
-              <form onSubmit={submit} className="mt-10 max-w-xl">
-                <div className="flex items-center gap-2 rounded-2xl border border-border bg-white p-2 pl-4 shadow-[var(--shadow-card)] transition focus-within:border-primary/50 focus-within:ring-4 focus-within:ring-primary/10">
-                  <Globe className="h-5 w-5 shrink-0 text-muted-foreground" />
-                  <input
-                    id="url-input"
-                    type="text"
-                    inputMode="url"
-                    autoComplete="off"
-                    spellCheck={false}
-                    placeholder="yourwebsite.com"
-                    value={url}
-                    onChange={(e) => setUrl(e.target.value)}
-                    className="min-w-0 flex-1 bg-transparent py-3 text-base text-foreground outline-none placeholder:text-muted-foreground/70"
-                  />
-                  <button
-                    type="submit"
-                    className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110 hover:-translate-y-0.5 active:scale-[.98]"
-                  >
-                    Analyze <ArrowRight className="h-4 w-4" />
-                  </button>
-                  <Link
-                    to="/multi-page-audit"
-                    className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-primary/25 bg-white px-5 py-3 text-sm font-semibold text-primary transition hover:bg-accent"
-                  >
-                    Multi-Page Audit
-                  </Link>
+            <form onSubmit={submit} className="mt-10 max-w-xl">
+              <div className="overflow-hidden rounded-2xl border border-border bg-white shadow-[var(--shadow-card)] transition focus-within:border-primary/50 focus-within:ring-4 focus-within:ring-primary/10">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 p-2 sm:pl-4">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <Globe className="h-5 w-5 shrink-0 text-muted-foreground" />
+                    <input
+                      id="url-input"
+                      type="text"
+                      inputMode="url"
+                      autoComplete="off"
+                      spellCheck={false}
+                      placeholder="yourwebsite.com"
+                      value={url}
+                      onChange={(e) => setUrl(e.target.value)}
+                      className="min-w-0 flex-1 bg-transparent py-3 text-base text-foreground outline-none placeholder:text-muted-foreground/70"
+                    />
+                  </div>
+                  <div className="flex gap-2 px-1 pb-1 sm:p-0">
+                    <button
+                      type="submit"
+                      className="inline-flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3.5 text-sm font-semibold text-white shadow-[var(--shadow-glow)] transition hover:brightness-110 hover:-translate-y-0.5 active:scale-[.98]"
+                    >
+                      Analyze <ArrowRight className="h-4 w-4" />
+                    </button>
+                    <Link
+                      to="/multi-page-audit"
+                      className="inline-flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-xl border border-primary/25 bg-white px-5 py-3.5 text-sm font-semibold text-primary transition hover:bg-accent"
+                    >
+                      Multi-Page Audit
+                    </Link>
+                  </div>
                 </div>
-                {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
-                <p className="mt-3 text-xs text-muted-foreground">Free scan ‚· No signup required ‚· Results in 60s</p>
-              </form>
+              </div>
+              {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
+              <p className="mt-3 text-xs text-muted-foreground">Free scan · No signup required · Results in 60s</p>
+            </form>
             </Reveal>
             <Reveal delay={320}>
               <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-widest text-muted-foreground/80">
@@ -547,7 +553,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 function HeroVisual() {
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-lg">
+    <div className="relative mx-auto aspect-square w-full max-w-lg overflow-hidden">
       {/* Main card */}
       <div className="absolute inset-6 rounded-[32px] border border-border bg-white p-6 shadow-[var(--shadow-glow)]">
         <div className="flex items-center gap-2 border-b border-border pb-4">
