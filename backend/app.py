@@ -20,6 +20,7 @@ app.add_middleware(
         "http://localhost:8080",
         "http://localhost:5173",
         "https://rankpilot-ai.maazansari260.workers.dev",
+        "https://brandvizi.in",
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS"],
