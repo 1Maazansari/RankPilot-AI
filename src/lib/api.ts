@@ -12,8 +12,8 @@ const severitySchema = z.enum(["critical", "high", "medium", "low"]);
 const codeSuggestionSchema = z.object({
   language: z.string().default(""),
   code: z.string().default(""),
-  file_hint: z.string().optional(),
-  location_hint: z.string().optional(),
+  file_hint: z.string().nullish(),
+  location_hint: z.string().nullish(),
   explanation: z.string().default(""),
 });
 
