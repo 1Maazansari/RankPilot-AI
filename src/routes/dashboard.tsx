@@ -12,6 +12,7 @@ import { SocialPreview } from "@/components/dashboard/social-preview";
 import { MediaAnalysis } from "@/components/dashboard/media-analysis";
 import { SeoIssuesTable } from "@/components/dashboard/seo-issues-table";
 import { AiRecommendations } from "@/components/dashboard/ai-recommendations";
+import { AiSeoIntelligence } from "@/components/dashboard/ai-seo-intelligence";
 import { readScan } from "@/lib/scan-storage";
 import { downloadReport } from "@/lib/report-download";
 
@@ -148,6 +149,7 @@ function DashboardPage() {
         <MediaAnalysis scan={scan} media={media} />
         <SeoIssuesTable issues={seo.issues} />
         <AiRecommendations recommendations={ai.recommendations} />
+        <AiSeoIntelligence agents={result.agents} />
 
         <section className="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-primary/20 bg-accent/50 p-6 sm:p-8">
           <div className="flex items-start gap-3">

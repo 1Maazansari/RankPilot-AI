@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from backend.config import SCANNER_TIMEOUT_SECONDS
+from backend.agents.content_evidence import extract_content_evidence
 from .client import session
 from .headings import count_h1, count_h2
 from .images import count_images, count_missing_alt_text
@@ -52,6 +53,7 @@ def scan_website(url: str) -> ScannerResponse:
         internal_links=count_internal_links(soup, validated_url),
         robots_found=detect_robots_txt(validated_url),
         sitemap_found=detect_sitemap_xml(validated_url),
+        content_evidence=extract_content_evidence(html),
     )
 
     logger.info("Website scan complete: url=%s", validated_url)

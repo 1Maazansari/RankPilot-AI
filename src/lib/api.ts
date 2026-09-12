@@ -9,6 +9,47 @@ const SCAN_TIMEOUT_MS = 120_000;
 
 const severitySchema = z.enum(["critical", "high", "medium", "low"]);
 
+const codeSuggestionSchema = z.object({
+  language: z.string().default(""),
+  code: z.string().default(""),
+  file_hint: z.string().optional(),
+  location_hint: z.string().optional(),
+  explanation: z.string().default(""),
+});
+
+const agentFindingSchema = z.object({
+  title: z.string().default(""),
+  category: z.string().default(""),
+  severity: z.string().default(""),
+  explanation: z.string().default(""),
+  recommendation: z.string().default(""),
+  implementation_steps: z.array(z.string()).default([]),
+  code_suggestion: z.union([codeSuggestionSchema, z.string(), z.null()]).optional(),
+  confidence: z.number().optional(),
+  source_rule_id: z.string().nullish(),
+  source_message: z.string().nullish(),
+});
+
+const agentAnalysisSchema = z.object({
+  agent_name: z.string().default(""),
+  summary: z.string().default(""),
+  findings: z.array(agentFindingSchema).default([]),
+});
+
+const validationResultSchema = z.object({
+  valid: z.boolean().default(false),
+  validated_findings: z.array(agentFindingSchema).default([]),
+  rejected_findings: z.array(agentFindingSchema).default([]),
+  warnings: z.array(z.string()).default([]),
+});
+
+const finalAgentResultSchema = z.object({
+  technical: agentAnalysisSchema,
+  content: agentAnalysisSchema,
+  aeo_geo: agentAnalysisSchema,
+  validation: validationResultSchema,
+});
+
 const scanResponseSchema = z.object({
   scan: z
     .object({
@@ -96,6 +137,7 @@ const scanResponseSchema = z.object({
         .optional(),
     })
     .optional(),
+  agents: finalAgentResultSchema.optional(),
 });
 
 async function readDetail(response: Response): Promise<string | undefined> {

@@ -34,6 +34,29 @@ export interface ScannerResponse {
   internal_links: number;
   robots_found: boolean;
   sitemap_found: boolean;
+
+  /**
+   * Content evidence extracted by the backend scanner.
+   * Used by the Content Intelligence and AEO/GEO agents.
+   */
+  content_evidence?: {
+    word_count: number;
+    text_excerpt: string;
+    h1_texts: string[];
+    h2_texts: string[];
+    h3_texts: string[];
+    lists: Array<{
+      type: string;
+      item_count: number;
+      excerpt: string;
+    }>;
+    detected_questions: string[];
+    schema: {
+      has_json_ld: boolean;
+      has_microdata: boolean;
+      types: string[];
+    };
+  };
 }
 
 export interface SEOIssue {
@@ -69,13 +92,17 @@ export interface AIRecommendation {
   impact: string;
   estimated_effort: string;
   action: string;
+  source_issue_type?: string;
+  affected_page_count?: number;
+  affected_urls?: string[];
+  example?: string;
 }
 
 export interface AIResult {
   recommendations: AIRecommendation[];
 }
 
-/** Optional, forward-compatible media payload. Absent in the current backend. */
+/** Optional, forward-compatible media payload. */
 export interface MediaImage {
   url: string;
   alt?: string;
@@ -94,11 +121,68 @@ export interface MediaResult {
   videos?: MediaVideo[];
 }
 
+/**
+ * LangGraph multi-agent analysis types.
+ * Optional for backward compatibility.
+ */
+
+export interface CodeSuggestion {
+  language: string;
+  code: string;
+  file_hint?: string | null;
+  location_hint?: string | null;
+  explanation: string;
+}
+
+export interface AgentFinding {
+  title: string;
+  category: string;
+  severity: string;
+  explanation: string;
+  recommendation: string;
+  implementation_steps: string[];
+
+  /**
+   * Can be null for findings where no code snippet is appropriate.
+   */
+  code_suggestion?: CodeSuggestion | string | null;
+
+  confidence?: number;
+
+  /**
+   * Null for evidence-derived AI findings that do not map
+   * directly to a deterministic SEO rule.
+   */
+  source_rule_id?: string | null;
+  source_message?: string | null;
+}
+
+export interface AgentAnalysis {
+  agent_name: string;
+  summary: string;
+  findings: AgentFinding[];
+}
+
+export interface ValidationResult {
+  valid: boolean;
+  validated_findings: AgentFinding[];
+  rejected_findings: AgentFinding[];
+  warnings: string[];
+}
+
+export interface FinalAgentResult {
+  technical: AgentAnalysis;
+  content: AgentAnalysis;
+  aeo_geo: AgentAnalysis;
+  validation: ValidationResult;
+}
+
 export interface ScanResponse {
   scan: ScannerResponse;
   seo: SEOAnalysis;
   ai: AIResult;
   media?: MediaResult;
+  agents?: FinalAgentResult;
 }
 
 /** What the frontend persists between /analyze and /dashboard. */

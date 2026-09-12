@@ -1,3 +1,5 @@
+from typing import Any
+
 from pydantic import BaseModel, ConfigDict, Field
 
 
@@ -46,3 +48,6 @@ class ScannerResponse(BaseModel):
     # Technical Files
     robots_found: bool
     sitemap_found: bool
+
+    # Compact content evidence for AI agents.
+    content_evidence: dict[str, Any] = Field(default_factory=dict)

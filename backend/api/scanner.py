@@ -1,3 +1,4 @@
+
 """
 Scanner API for RankPilot AI.
 """
@@ -6,12 +7,15 @@ import logging
 import time
 from collections import defaultdict
 from threading import Lock
+from typing import Any
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, HttpUrl
 
 from backend.ai.engine import analyze_ai
 from backend.ai.models import AIRecommendationResult
+from backend.agents.graph import brandvizi_agent_graph
+from backend.agents.schemas import FinalAgentResult
 from backend.scanner.models import ScannerResponse
 from backend.scanner.scanner import (
     ScannerTimeoutError,
@@ -81,7 +85,113 @@ class ScanRequest(BaseModel):
 class ScanResponse(BaseModel):
     scan: ScannerResponse
     seo: SEOAnalysisResult
+
+    # Existing AI recommendation response.
+    # Kept for frontend/backward compatibility.
     ai: AIRecommendationResult
+
+    # New LangGraph multi-agent analysis.
+    agents: FinalAgentResult
+
+
+# =========================================================
+# LANGGRAPH HELPERS
+# =========================================================
+
+
+def _model_dump(value: Any) -> dict[str, Any]:
+    """
+    Convert a Pydantic model to a dictionary.
+
+    Supports the current Pydantic v2 models used by BrandVizi.
+    """
+    if hasattr(value, "model_dump"):
+        return value.model_dump()
+
+    if isinstance(value, dict):
+        return value
+
+    raise TypeError(
+        f"Expected a Pydantic model or dict, got {type(value).__name__}"
+    )
+
+
+def run_agent_analysis(
+    scan_result: ScannerResponse,
+    seo_result: SEOAnalysisResult,
+) -> FinalAgentResult:
+    """
+    Run the BrandVizi LangGraph multi-agent workflow.
+
+    Pipeline:
+        Technical SEO
+              ↓
+        Content Intelligence
+              ↓
+        AEO/GEO
+              ↓
+        Validation
+    """
+
+    initial_state = {
+        "scan": _model_dump(scan_result),
+        "seo_analysis": _model_dump(seo_result),
+        "errors": [],
+    }
+
+    graph_result = brandvizi_agent_graph.invoke(
+        initial_state
+    )
+
+    # -----------------------------------------------------
+    # Defensive validation of graph output
+    # -----------------------------------------------------
+
+    try:
+        return FinalAgentResult(
+            technical=graph_result.get(
+                "technical_analysis",
+                {
+                    "agent_name": "technical_seo",
+                    "summary": "Technical SEO analysis unavailable.",
+                    "findings": [],
+                },
+            ),
+            content=graph_result.get(
+                "content_analysis",
+                {
+                    "agent_name": "content_intelligence",
+                    "summary": "Content Intelligence analysis unavailable.",
+                    "findings": [],
+                },
+            ),
+            aeo_geo=graph_result.get(
+                "aeo_geo_analysis",
+                {
+                    "agent_name": "aeo_geo",
+                    "summary": "AEO/GEO analysis unavailable.",
+                    "findings": [],
+                },
+            ),
+            validation=graph_result.get(
+                "validation",
+                {
+                    "valid": False,
+                    "validated_findings": [],
+                    "rejected_findings": [],
+                    "warnings": [
+                        "LangGraph validation output was unavailable."
+                    ],
+                },
+            ),
+        )
+
+    except Exception:
+        logger.exception(
+            "Failed to validate LangGraph output"
+        )
+
+        raise
 
 
 # =========================================================
@@ -145,23 +255,65 @@ def scan(
     # -----------------------------------------------------
 
     try:
+        # =================================================
+        # STEP 1 — WEBSITE SCANNER
+        # =================================================
+
         scan_result = scan_website(
             str(request.url)
         )
 
+        # =================================================
+        # STEP 2 — DETERMINISTIC SEO ENGINE
+        # =================================================
+
         seo_result = analyze(
             scan_result
         )
+
+        # =================================================
+        # STEP 3 — EXISTING AI RECOMMENDATION ENGINE
+        # =================================================
+        #
+        # Kept intentionally for backward compatibility
+        # with the existing BrandVizi frontend/API.
+        #
+        # The deterministic SEO engine remains the factual
+        # source of truth for this layer.
+        #
 
         ai_result = analyze_ai(
             scan_result,
             seo_result,
         )
 
+        # =================================================
+        # STEP 4 — LANGGRAPH MULTI-AGENT SYSTEM
+        # =================================================
+        #
+        # Technical SEO
+        #       ↓
+        # Content Intelligence
+        #       ↓
+        # AEO/GEO
+        #       ↓
+        # Validation
+        #
+
+        agent_result = run_agent_analysis(
+            scan_result,
+            seo_result,
+        )
+
+        # =================================================
+        # STEP 5 — FINAL RESPONSE
+        # =================================================
+
         return ScanResponse(
             scan=scan_result,
             seo=seo_result,
             ai=ai_result,
+            agents=agent_result,
         )
 
     # -----------------------------------------------------
