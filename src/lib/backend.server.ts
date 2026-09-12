@@ -8,7 +8,11 @@ import type { HealthResponse, ScanResponse, AIRecommendation } from "./backend-c
 const DEFAULT_BASE = "http://localhost:8000";
 
 export function backendBaseUrl(): string {
-  const raw = process.env["RANKPILOT_API_URL"] ?? DEFAULT_BASE;
+  const raw =
+    typeof window !== "undefined"
+      ? import.meta.env.VITE_RANKPILOT_API_URL ?? DEFAULT_BASE
+      : process.env.RANKPILOT_API_URL ?? DEFAULT_BASE;
+
   return raw.replace(/\/+$/, "");
 }
 
