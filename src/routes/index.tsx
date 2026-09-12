@@ -102,20 +102,55 @@ function Reveal({ children, delay = 0 }: { children: ReactNode; delay?: number }
 }
 
 function Landing() {
+  useEffect(() => {
+  if (document.getElementById("google-analytics")) return;
+
+  const script = document.createElement("script");
+  script.id = "google-analytics";
+  script.async = true;
+  script.src =
+    "https://www.googletagmanager.com/gtag/js?id=G-NX8MWHM88V";
+
+  document.head.appendChild(script);
+
+  const inlineScript = document.createElement("script");
+  inlineScript.innerHTML = `
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NX8MWHM88V');
+  `;
+
+  document.head.appendChild(inlineScript);
+}, []);
   const navigate = useNavigate();
   const [url, setUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   function submit(e: FormEvent) {
-    e.preventDefault();
-    const result = validateWebsiteUrl(url);
-    if (!result.ok) {
-      setError(result.message);
-      return;
-    }
-    setError(null);
-    navigate({ to: "/analyze", search: { url: result.url } });
+  e.preventDefault();
+
+  const result = validateWebsiteUrl(url);
+
+  if (!result.ok) {
+    setError(result.message);
+    return;
   }
+
+  setError(null);
+
+  // Track valid SEO analysis attempts
+  if (
+    typeof window !== "undefined" &&
+    typeof (window as any).gtag === "function"
+  ) {
+    (window as any).gtag("event", "seo_analysis_started", {
+      analysis_type: "website_seo",
+    });
+  }
+
+  navigate({ to: "/analyze", search: { url: result.url } });
+}
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-background">
