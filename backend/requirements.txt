@@ -11,3 +11,4 @@ sqlalchemy
 alembic
 pytest
 google-genai
+langgraph
